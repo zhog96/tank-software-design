@@ -22,7 +22,7 @@ public class Player extends GameObject {
     public Player(TiledMapTileLayer groundLayer, Texture texture, GridPoint2 coordinates, float rotation, TileMovement tileMovement) {
         super(groundLayer, texture, coordinates, rotation);
         this.tileMovement = tileMovement;
-        this.movementProgress = new MovementProgress(MOVEMENT_SPEED);
+        movementProgress = new MovementProgress(MOVEMENT_SPEED);
         previousCoordinates = new GridPoint2(coordinates);
 
     }
