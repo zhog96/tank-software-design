@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.GridPoint2;
 
 public class Direction {
     private final GridPoint2 deltaCoordinate;
-    private float angle;
+    private final float angle;
 
     public Direction(int x, int y) {
         deltaCoordinate = new GridPoint2(x, y);
