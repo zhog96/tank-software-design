@@ -1,9 +1,9 @@
 package ru.mipt.bit.platformer.util;
 
 import static com.badlogic.gdx.math.MathUtils.isEqual;
-import static ru.mipt.bit.platformer.util.GdxGameUtils.continueProgress;
+import static com.badlogic.gdx.math.MathUtils.clamp;
 
-public final class MovementProgress {
+public class MovementProgress {
     private float progress;
     private final float speed;
 
@@ -21,7 +21,7 @@ public final class MovementProgress {
     }
 
     public void update(float deltaTime) {
-        progress = continueProgress(progress, deltaTime, speed);
+        progress = clamp(progress + deltaTime / speed, 0f, 1f);
     }
 
     public float getProgress() {

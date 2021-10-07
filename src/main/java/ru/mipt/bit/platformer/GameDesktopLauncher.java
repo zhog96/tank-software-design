@@ -6,72 +6,85 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.MapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Interpolation;
 
-import ru.mipt.bit.platformer.objects.GameObject;
-import ru.mipt.bit.platformer.objects.Obstacle;
-import ru.mipt.bit.platformer.objects.Player;
-import ru.mipt.bit.platformer.util.TextureLoader;
-import ru.mipt.bit.platformer.util.TileMovement;
+import ru.mipt.bit.platformer.input.libgdx.LibGdxKeyboardListener;
+import ru.mipt.bit.platformer.renderer.LevelRenderer;
+import ru.mipt.bit.platformer.renderer.libgdx.LibGdxMapGraphics;
+import ru.mipt.bit.platformer.renderer.libgdx.LibGdxObstacleGraphics;
+import ru.mipt.bit.platformer.renderer.libgdx.LibGdxPlayerGraphics;
+import ru.mipt.bit.platformer.util.TileUtils;
+import ru.mipt.bit.platformer.util.GdxUtils;
 
 import java.util.ArrayList;
 
 import static com.badlogic.gdx.graphics.GL20.GL_COLOR_BUFFER_BIT;
-import static ru.mipt.bit.platformer.util.GdxGameUtils.*;
 
 public class GameDesktopLauncher implements ApplicationListener {
     private Batch batch;
-    private TextureLoader textureLoader;
-
     private TiledMap level;
-    private MapRenderer levelRenderer;
-
     private Player player;
-    private final ArrayList<GameObject> gameObjects = new ArrayList<>();
+    private ArrayList<Obstacle> obstacles;
+    private LevelRenderer levelRenderer;
+
+    private void initLevelRenderer() {
+        batch = new SpriteBatch();
+        levelRenderer = new LevelRenderer();
+        levelRenderer.setMapGraphics(new LibGdxMapGraphics(level, batch));
+        levelRenderer.setPlayerGraphics(new LibGdxPlayerGraphics(player, batch));
+        for (var obstacle : obstacles) {
+            levelRenderer.addObstacleGraphics(new LibGdxObstacleGraphics(obstacle, batch));
+        }
+    }
+
+    private void initCollider() {
+        for (var obstacle : obstacles) {
+            ColliderManager.addObstacle(obstacle);
+        }
+    }
+
+    private void initObstacles() {
+        obstacles = new ArrayList<>();
+        obstacles.add(new Obstacle(new GridPoint2(4,2)));
+        obstacles.add(new Obstacle(new GridPoint2(5,3)));
+    }
+
+    private void initMap() {
+        level = new TmxMapLoader().load("level.tmx");
+        TiledMapTileLayer groundLayer = GdxUtils.getSingleLayer(level);
+        TileUtils.setTileSize(new GridPoint2(groundLayer.getTileWidth(), groundLayer.getTileHeight()));
+        TileUtils.setInterpolation(Interpolation.smooth);
+    }
 
     @Override
     public void create() {
-        batch = new SpriteBatch();
-        textureLoader = new TextureLoader();
+        initMap();
+        player = new Player(new GridPoint2(4, 3), 0.2f, new LibGdxKeyboardListener());
+        initObstacles();
+        initCollider();
+        initLevelRenderer();
+    }
 
-        // load level tiles
-        level = new TmxMapLoader().load("level.tmx");
-        levelRenderer = createSingleLayerMapRenderer(level, batch);
-        TiledMapTileLayer groundLayer = getSingleLayer(level);
-        TileMovement tileMovement = new TileMovement(groundLayer, Interpolation.smooth);
+    private void cleanScreen() {
+        Gdx.gl.glClearColor(0f, 0f, 0.2f, 1f);
+        Gdx.gl.glClear(GL_COLOR_BUFFER_BIT);
+    }
 
-        // load game objects
-        player = new Player(groundLayer, textureLoader.load("images/tank_blue.png"), new GridPoint2(1, 1), 0f, tileMovement);
-        gameObjects.add(player);
-        gameObjects.add(new Obstacle(groundLayer, textureLoader.load("images/greenTree.png"), new GridPoint2(1, 3), 0f));
-        gameObjects.add(new Obstacle(groundLayer, textureLoader.load("images/greenTree.png"), new GridPoint2(1, 5), 0f));
-        gameObjects.add(new Obstacle(groundLayer, textureLoader.load("images/greenTree.png"), new GridPoint2(2, 3), 0f));
+    private void update() {
+        float deltaTime = Gdx.graphics.getDeltaTime();
+        player.update(deltaTime);
     }
 
     @Override
     public void render() {
-        // clear the screen
-        Gdx.gl.glClearColor(0f, 0f, 0.2f, 1f);
-        Gdx.gl.glClear(GL_COLOR_BUFFER_BIT);
-
-        // get time passed since the last render
-        float deltaTime = Gdx.graphics.getDeltaTime();
-        player.move(deltaTime, gameObjects);
-
-        // render each tile of the level
-        levelRenderer.render();
-        // start recording all drawing commands
-        batch.begin();
-        for (GameObject gameObject : gameObjects) {
-            gameObject.draw(batch);
-        }
-        // submit all drawing requests
-        batch.end();
+        update();
+        cleanScreen();
+        levelRenderer.levelRender();
+        if (batch.isDrawing()) batch.end();
     }
 
     @Override
@@ -92,7 +105,7 @@ public class GameDesktopLauncher implements ApplicationListener {
     @Override
     public void dispose() {
         // dispose of all the native resources (classes which implement com.badlogic.gdx.utils.Disposable)
-        textureLoader.dispose();
+        levelRenderer.delete();
         level.dispose();
         batch.dispose();
     }
@@ -104,4 +117,3 @@ public class GameDesktopLauncher implements ApplicationListener {
         new Lwjgl3Application(new GameDesktopLauncher(), config);
     }
 }
-
