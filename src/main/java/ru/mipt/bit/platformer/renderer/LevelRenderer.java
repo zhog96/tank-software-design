@@ -3,23 +3,23 @@ package ru.mipt.bit.platformer.renderer;
 import java.util.ArrayList;
 
 public class LevelRenderer {
-    private MapGraphics mapGraphics;
-    private PlayerGraphics playerGraphics;
-    private final ArrayList<ObstacleGraphics> obstacleGraphicsList;
+    private Graphics mapGraphics;
+    private Graphics playerGraphics;
+    private final ArrayList<Graphics> obstacleGraphicsList;
 
     public LevelRenderer() {
         obstacleGraphicsList = new ArrayList<>();
     }
 
-    public void setMapGraphics(MapGraphics mapGraphics) {
+    public void setMapGraphics(Graphics mapGraphics) {
         this.mapGraphics = mapGraphics;
     }
 
-    public void setPlayerGraphics(PlayerGraphics playerGraphics) {
+    public void setPlayerGraphics(Graphics playerGraphics) {
         this.playerGraphics = playerGraphics;
     }
 
-    public void addObstacleGraphics(ObstacleGraphics obstacleGraphics) {
+    public void addObstacleGraphics(Graphics obstacleGraphics) {
         obstacleGraphicsList.add(obstacleGraphics);
     }
 

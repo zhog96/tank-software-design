@@ -19,7 +19,8 @@ class PlayerTest {
         ColliderManager.addObstacle(new Obstacle(new GridPoint2(2, 3)));
         ColliderManager.addObstacle(new Obstacle(new GridPoint2(3, 2)));
         KeyboardListener.INPUTS[] currInput = {KeyboardListener.INPUTS.LEFT};
-        Player player = new Player(new GridPoint2(3, 3), 0.2f, () -> currInput[0]);
+        Player player = new Player(new GridPoint2(3, 3), 0.2f);
+        player.setKeyboardListener(() -> currInput[0]);
         player.update(0.1f);
         player.update(0.1f);
         assertThat(player.getGridPosition()).isEqualToComparingFieldByField(new GridPoint2(3, 3));

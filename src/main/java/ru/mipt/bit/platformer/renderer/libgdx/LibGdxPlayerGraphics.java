@@ -3,9 +3,9 @@ package ru.mipt.bit.platformer.renderer.libgdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import ru.mipt.bit.platformer.Player;
-import ru.mipt.bit.platformer.renderer.PlayerGraphics;
+import ru.mipt.bit.platformer.renderer.Graphics;
 
-public class LibGdxPlayerGraphics implements PlayerGraphics {
+public class LibGdxPlayerGraphics implements Graphics {
     private final LibGdxRenderer renderer;
     private final Player player;
 

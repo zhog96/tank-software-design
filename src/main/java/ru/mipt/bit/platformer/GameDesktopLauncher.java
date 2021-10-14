@@ -13,6 +13,9 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Interpolation;
 
 import ru.mipt.bit.platformer.input.libgdx.LibGdxKeyboardListener;
+import ru.mipt.bit.platformer.level.Level;
+// import ru.mipt.bit.platformer.level.LevelFromFileGenerator;
+import ru.mipt.bit.platformer.level.LevelRandomGenerator;
 import ru.mipt.bit.platformer.renderer.LevelRenderer;
 import ru.mipt.bit.platformer.renderer.libgdx.LibGdxMapGraphics;
 import ru.mipt.bit.platformer.renderer.libgdx.LibGdxObstacleGraphics;
@@ -26,7 +29,7 @@ import static com.badlogic.gdx.graphics.GL20.GL_COLOR_BUFFER_BIT;
 
 public class GameDesktopLauncher implements ApplicationListener {
     private Batch batch;
-    private TiledMap level;
+    private TiledMap levelBackground;
     private Player player;
     private ArrayList<Obstacle> obstacles;
     private LevelRenderer levelRenderer;
@@ -34,7 +37,7 @@ public class GameDesktopLauncher implements ApplicationListener {
     private void initLevelRenderer() {
         batch = new SpriteBatch();
         levelRenderer = new LevelRenderer();
-        levelRenderer.setMapGraphics(new LibGdxMapGraphics(level, batch));
+        levelRenderer.setMapGraphics(new LibGdxMapGraphics(levelBackground, batch));
         levelRenderer.setPlayerGraphics(new LibGdxPlayerGraphics(player, batch));
         for (var obstacle : obstacles) {
             levelRenderer.addObstacleGraphics(new LibGdxObstacleGraphics(obstacle, batch));
@@ -47,15 +50,18 @@ public class GameDesktopLauncher implements ApplicationListener {
         }
     }
 
-    private void initObstacles() {
-        obstacles = new ArrayList<>();
-        obstacles.add(new Obstacle(new GridPoint2(4,2)));
-        obstacles.add(new Obstacle(new GridPoint2(5,3)));
+    private void initLevel() {
+        // Level level = new Level(new LevelFromFileGenerator("src/main/resources/level.txt"));
+        Level level = new Level(new LevelRandomGenerator(10, 7));
+        level.initObjects();
+        player = level.getPlayer();
+        player.setKeyboardListener(new LibGdxKeyboardListener());
+        obstacles = level.getObstacles();
     }
 
     private void initMap() {
-        level = new TmxMapLoader().load("level.tmx");
-        TiledMapTileLayer groundLayer = GdxUtils.getSingleLayer(level);
+        levelBackground = new TmxMapLoader().load("levelBackground.tmx");
+        TiledMapTileLayer groundLayer = GdxUtils.getSingleLayer(levelBackground);
         TileUtils.setTileSize(new GridPoint2(groundLayer.getTileWidth(), groundLayer.getTileHeight()));
         TileUtils.setInterpolation(Interpolation.smooth);
     }
@@ -63,8 +69,7 @@ public class GameDesktopLauncher implements ApplicationListener {
     @Override
     public void create() {
         initMap();
-        player = new Player(new GridPoint2(4, 3), 0.2f, new LibGdxKeyboardListener());
-        initObstacles();
+        initLevel();
         initCollider();
         initLevelRenderer();
     }
@@ -106,7 +111,7 @@ public class GameDesktopLauncher implements ApplicationListener {
     public void dispose() {
         // dispose of all the native resources (classes which implement com.badlogic.gdx.utils.Disposable)
         levelRenderer.delete();
-        level.dispose();
+        levelBackground.dispose();
         batch.dispose();
     }
 

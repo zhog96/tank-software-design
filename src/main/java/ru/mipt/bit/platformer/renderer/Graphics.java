@@ -1,6 +1,6 @@
 package ru.mipt.bit.platformer.renderer;
 
-public interface MapGraphics {
+public interface Graphics {
     void render();
     void delete();
 }

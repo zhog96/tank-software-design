@@ -5,10 +5,10 @@ import com.badlogic.gdx.maps.MapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import ru.mipt.bit.platformer.renderer.MapGraphics;
+import ru.mipt.bit.platformer.renderer.Graphics;
 import ru.mipt.bit.platformer.util.GdxUtils;
 
-public class LibGdxMapGraphics implements MapGraphics {
+public class LibGdxMapGraphics implements Graphics {
     private final MapRenderer mapRenderer;
     private final Batch batch;
 

@@ -12,17 +12,21 @@ public class Player {
     private final Vector2 position;
     private final GridPoint2 gridPosition;
     private float rotation;
-    private final KeyboardListener keyboardListener;
+
+    private KeyboardListener keyboardListener;
     private Movement movement;
     private final float speed;
 
-    public Player(GridPoint2 gridPosition, float speed, KeyboardListener keyboardListener) {
+    public Player(GridPoint2 gridPosition, float speed) {
         this.gridPosition = gridPosition;
         this.position = TileUtils.calculateTileCenter(gridPosition);
-        this.keyboardListener = keyboardListener;
         this.rotation = 0.0f;
         this.movement = new Movement(gridPosition, gridPosition, speed);
         this.speed = speed;
+    }
+
+    public void setKeyboardListener(KeyboardListener keyboardListener) {
+        this.keyboardListener = keyboardListener;
     }
 
     public Vector2 getPosition() {
@@ -49,17 +53,19 @@ public class Player {
     }
 
     public void update(float deltaTime) {
-        if (keyboardListener.pressed() == KeyboardListener.INPUTS.UP) {
-            tryMove(new Direction(0, 1));
-        }
-        if (keyboardListener.pressed() == KeyboardListener.INPUTS.DOWN) {
-            tryMove(new Direction(0, -1));
-        }
-        if (keyboardListener.pressed() == KeyboardListener.INPUTS.RIGHT) {
-            tryMove(new Direction(1, 0));
-        }
-        if (keyboardListener.pressed() == KeyboardListener.INPUTS.LEFT) {
-            tryMove(new Direction(-1, 0));
+        if (keyboardListener != null) {
+            if (keyboardListener.pressed() == KeyboardListener.INPUTS.UP) {
+                tryMove(new Direction(0, 1));
+            }
+            if (keyboardListener.pressed() == KeyboardListener.INPUTS.DOWN) {
+                tryMove(new Direction(0, -1));
+            }
+            if (keyboardListener.pressed() == KeyboardListener.INPUTS.RIGHT) {
+                tryMove(new Direction(1, 0));
+            }
+            if (keyboardListener.pressed() == KeyboardListener.INPUTS.LEFT) {
+                tryMove(new Direction(-1, 0));
+            }
         }
         movement.update(deltaTime);
         position.set(movement.calculatePosition());

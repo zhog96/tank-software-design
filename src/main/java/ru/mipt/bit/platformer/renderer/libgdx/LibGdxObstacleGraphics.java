@@ -3,9 +3,9 @@ package ru.mipt.bit.platformer.renderer.libgdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import ru.mipt.bit.platformer.Obstacle;
-import ru.mipt.bit.platformer.renderer.ObstacleGraphics;
+import ru.mipt.bit.platformer.renderer.Graphics;
 
-public class LibGdxObstacleGraphics implements ObstacleGraphics {
+public class LibGdxObstacleGraphics implements Graphics {
     private final LibGdxRenderer renderer;
     private final Obstacle obstacle;
 
