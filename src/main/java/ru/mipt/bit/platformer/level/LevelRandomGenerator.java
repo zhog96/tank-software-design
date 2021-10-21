@@ -22,10 +22,21 @@ public class LevelRandomGenerator implements LevelGenerator {
             }
         }
         Random random = new Random();
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 15; i++) {
             rawContent[random.nextInt(levelHeight)][random.nextInt(levelWidth)] = 'T';
         }
-        rawContent[random.nextInt(levelHeight)][random.nextInt(levelWidth)] = 'X';
+        for (int i = 0; i < 5; i++) {
+            rawContent[random.nextInt(levelHeight - 2) + 1][random.nextInt(levelWidth - 2) + 1] = 'X';
+        }
+        rawContent[random.nextInt(levelHeight - 2) + 1][random.nextInt(levelWidth - 2) + 1] = 'P';
+        for (int i = 0; i < levelWidth; i++) {
+            rawContent[0][i] = 'T';
+            rawContent[levelHeight - 1][i] = 'T';
+        }
+        for (int i = 0; i < levelHeight; i++) {
+            rawContent[i][0] = 'T';
+            rawContent[i][levelWidth - 1] = 'T';
+        }
         List<String> content = new ArrayList<>();
         for (var line : rawContent) {
             content.add(new String(line));

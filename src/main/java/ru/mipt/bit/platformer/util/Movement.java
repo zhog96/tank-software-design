@@ -3,6 +3,9 @@ package ru.mipt.bit.platformer.util;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Movement {
     private final MovementProgress movementProgress;
     private final GridPoint2 toGridPosition;
@@ -17,6 +20,9 @@ public class Movement {
 
     public void update(float deltaTime) {
         movementProgress.update(deltaTime);
+        if (movementProgress.finishedMoving()) {
+            fromGridPosition.set(toGridPosition);
+        }
     }
 
     public boolean finishedMoving() {
@@ -25,5 +31,9 @@ public class Movement {
 
     public Vector2 calculatePosition() {
         return TileUtils.calculatePositionBetween(fromGridPosition, toGridPosition, movementProgress.getProgress());
+    }
+
+    public List<GridPoint2> getTrajectoryPoints() {
+        return Arrays.asList(fromGridPosition.cpy(), toGridPosition.cpy());
     }
 }

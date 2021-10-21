@@ -1,22 +1,20 @@
 package ru.mipt.bit.platformer;
 
 import com.badlogic.gdx.math.GridPoint2;
+import ru.mipt.bit.platformer.objects.Collider;
 
 import java.util.ArrayList;
 
 public class ColliderManager {
-    private static final ArrayList<Obstacle> obstacles = new ArrayList<>();
+    private final ArrayList<Collider> colliders = new ArrayList<>();
 
-    public static void addObstacle(Obstacle obstacle) {
-        obstacles.add(obstacle);
+    public void addCollider(Collider collider) {
+        colliders.add(collider);
     }
 
-    public static boolean canMove(Player player, GridPoint2 move) {
-        GridPoint2 estimatedPos = player.getGridPosition().cpy().add(move);
-        for (var obstacle : obstacles) {
-            if (obstacle.getGridPosition().equals(estimatedPos)) {
-                return false;
-            }
+    public boolean isFree(GridPoint2 targetGridPosition) {
+        for (var collider : colliders) {
+            if (collider.collides(targetGridPosition)) return false;
         }
         return true;
     }

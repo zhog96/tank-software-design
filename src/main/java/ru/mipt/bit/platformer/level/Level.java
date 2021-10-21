@@ -1,31 +1,38 @@
 package ru.mipt.bit.platformer.level;
 
 import com.badlogic.gdx.math.GridPoint2;
-import ru.mipt.bit.platformer.Obstacle;
-import ru.mipt.bit.platformer.Player;
+import ru.mipt.bit.platformer.ColliderManager;
+import ru.mipt.bit.platformer.objects.Obstacle;
+import ru.mipt.bit.platformer.objects.Tank;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Level {
     private final LevelGenerator levelGenerator;
-    private final ArrayList<Obstacle> obstacles;
-    private Player player;
+    private final List<Obstacle> obstacles;
+    private final List<Tank> enemyTanks;
+    private Tank playerTank;
 
     public Level(LevelGenerator levelGenerator) {
         this.levelGenerator = levelGenerator;
         obstacles = new ArrayList<>();
+        enemyTanks = new ArrayList<>();
     }
 
-    public ArrayList<Obstacle> getObstacles() {
+    public List<Obstacle> getObstacles() {
         return obstacles;
     }
 
-    public Player getPlayer() {
-        return player;
+    public List<Tank> getEnemyTanks() {
+        return enemyTanks;
     }
 
-    public void initObjects() {
+    public Tank getPlayerTank() {
+        return playerTank;
+    }
+
+    public void initObjects(ColliderManager colliderManager) {
         List<String> content = levelGenerator.generate();
         GridPoint2 position = new GridPoint2(0, 0);
         for (var line : content) {
@@ -36,7 +43,10 @@ public class Level {
                     case '_':
                         break;
                     case 'X':
-                        player = new Player(position.cpy(), speed);
+                        enemyTanks.add(new Tank(position.cpy(), speed, colliderManager));
+                        break;
+                    case 'P':
+                        playerTank = new Tank(position.cpy(), speed, colliderManager);
                         break;
                     case 'T':
                         obstacles.add(new Obstacle(position.cpy()));

@@ -10,7 +10,6 @@ public class LevelFromFileGenerator implements LevelGenerator {
 
     public LevelFromFileGenerator(String path) {
         try {
-            System.out.println(Paths.get(path));
             content = Files.readAllLines(Paths.get(path));
         } catch (IOException e) {
             e.printStackTrace();

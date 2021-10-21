@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class LevelRandomGeneratorTest {
 
     @ParameterizedTest
-    @CsvSource({"1, 2", "1, 10", "100, 100"})
+    @CsvSource({"3, 3", "3, 10", "100, 100"})
     void generateCheckGeneratedSize(int width, int height) {
         LevelGenerator levelGenerator = new LevelRandomGenerator(width, height);
         List<String> content = levelGenerator.generate();
