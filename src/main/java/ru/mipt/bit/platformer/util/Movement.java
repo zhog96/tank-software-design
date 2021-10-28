@@ -10,12 +10,14 @@ public class Movement {
     private final MovementProgress movementProgress;
     private final GridPoint2 toGridPosition;
     private final GridPoint2 fromGridPosition;
+    private final TileUtils tileUtils;
 
 
-    public Movement(GridPoint2 fromGridPosition, GridPoint2 toGridPosition, float speed) {
+    public Movement(GridPoint2 fromGridPosition, GridPoint2 toGridPosition, float speed, TileUtils tileUtils) {
         this.toGridPosition = toGridPosition;
         this.fromGridPosition = fromGridPosition;
         this.movementProgress = new MovementProgress(speed);
+        this.tileUtils = tileUtils;
     }
 
     public void update(float deltaTime) {
@@ -30,7 +32,7 @@ public class Movement {
     }
 
     public Vector2 calculatePosition() {
-        return TileUtils.calculatePositionBetween(fromGridPosition, toGridPosition, movementProgress.getProgress());
+        return tileUtils.calculatePositionBetween(fromGridPosition, toGridPosition, movementProgress.getProgress());
     }
 
     public List<GridPoint2> getTrajectoryPoints() {

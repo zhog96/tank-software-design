@@ -14,14 +14,16 @@ public class Tank implements Collider {
     private Movement movement;
     private final float speed;
     private final ColliderManager colliderManager;
+    private final TileUtils tileUtils;
 
-    public Tank(GridPoint2 gridPosition, float speed, ColliderManager colliderManager) {
+    public Tank(GridPoint2 gridPosition, float speed, ColliderManager colliderManager, TileUtils tileUtils) {
         this.gridPosition = gridPosition;
-        this.position = TileUtils.calculateTileCenter(gridPosition);
+        this.position = tileUtils.calculateTileCenter(gridPosition);
         this.rotation = 0.0f;
-        this.movement = new Movement(gridPosition, gridPosition, speed);
+        this.movement = new Movement(gridPosition, gridPosition, speed, tileUtils);
         this.speed = speed;
         this.colliderManager = colliderManager;
+        this.tileUtils = tileUtils;
     }
 
     public Vector2 getPosition() {
@@ -37,7 +39,7 @@ public class Tank implements Collider {
             if (colliderManager.isFree(gridPosition.cpy().add(move.getDeltaCoordinate()))) {
                 GridPoint2 prevGridPosition = gridPosition.cpy();
                 gridPosition.add(move.getDeltaCoordinate());
-                movement = new Movement(prevGridPosition, gridPosition, speed);
+                movement = new Movement(prevGridPosition, gridPosition, speed, tileUtils);
             }
             rotation = move.getAngle();
         }

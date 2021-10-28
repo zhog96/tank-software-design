@@ -15,10 +15,10 @@ class AIRandomTest {
 
     @Test
     void act() throws NoSuchFieldException, IllegalAccessException {
-        TileUtils.setTileSize(new GridPoint2(10, 10));
+        TileUtils tileUtils = new TileUtils(new GridPoint2(10, 10));
         ColliderManager colliderManager = new ColliderManager();
         for (int i = 0; i < 100; i++) {
-            Tank tank = new Tank(new GridPoint2(0, 0), 0.1f, colliderManager);
+            Tank tank = new Tank(new GridPoint2(0, 0), 0.1f, colliderManager, tileUtils);
             AIRandom actor = new AIRandom(tank);
             actor.act();
             Field gridPosition = tank.getClass().getDeclaredField("gridPosition");

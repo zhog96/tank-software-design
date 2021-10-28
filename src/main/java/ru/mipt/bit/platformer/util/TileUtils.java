@@ -6,18 +6,13 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class TileUtils {
-    private static GridPoint2 tileSize;
-    private static Interpolation interpolation;
+    private GridPoint2 tileSize;
 
-    public static void setTileSize(GridPoint2 tileSize) {
-        TileUtils.tileSize = tileSize.cpy();
+    public TileUtils(GridPoint2 tileSize) {
+        this.tileSize = tileSize;
     }
 
-    public static void setInterpolation(Interpolation interpolation) {
-        TileUtils.interpolation = interpolation;
-    }
-
-    public static Vector2 calculateTileCenter(GridPoint2 tileCoordinates) {
+    public Vector2 calculateTileCenter(GridPoint2 tileCoordinates) {
         int tileWidth = tileSize.x;
         int tileHeight = tileSize.y;
         int tileBottomLeftCornerX = tileCoordinates.x * tileWidth;
@@ -31,13 +26,12 @@ public class TileUtils {
                 .getCenter(new Vector2());
     }
 
-    public static Vector2 calculatePositionBetween(GridPoint2 fromTileCoordinates, GridPoint2 toTileCoordinates, float progress) {
+    public Vector2 calculatePositionBetween(GridPoint2 fromTileCoordinates, GridPoint2 toTileCoordinates, float progress) {
         Vector2 fromTileCenter = calculateTileCenter(fromTileCoordinates);
         Vector2 toTileCenter = calculateTileCenter(toTileCoordinates);
-
+        Interpolation interpolation = Interpolation.smooth;
         float intermediateX = interpolation.apply(fromTileCenter.x, toTileCenter.x, progress);
         float intermediateY = interpolation.apply(fromTileCenter.y, toTileCenter.y, progress);
-
         return new Vector2().set(intermediateX, intermediateY);
     }
 }

@@ -2,31 +2,33 @@ package ru.mipt.bit.platformer.renderer.libgdx;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import ru.mipt.bit.platformer.objects.Obstacle;
 import ru.mipt.bit.platformer.renderer.Graphics;
+import ru.mipt.bit.platformer.util.GdxUtils;
 
 public class LibGdxObstacleGraphics implements Graphics {
-    private final LibGdxRenderer renderer;
+    private final Rectangle bounding;
+    private final Batch batch;
+    private final TextureRegion textureRegion;
     private final Obstacle obstacle;
 
     public LibGdxObstacleGraphics(Obstacle obstacle, Batch batch) {
-        renderer = new LibGdxRenderer(
-                batch,
-                // Параметризовать path все равно бессмысленно, потому что потом может будет анимация у куста
-                new Texture("images/greenTree.png"),
-                0.0f
-        );
+        this.textureRegion = new TextureRegion(new Texture("images/greenTree.png"));
+        this.bounding = GdxUtils.createBoundingRectangle(textureRegion);
         this.obstacle = obstacle;
+        this.batch = batch;
     }
 
     @Override
     public void render() {
-        this.renderer.setCenter(obstacle.getPosition());
-        this.renderer.render();
+        bounding.setCenter(obstacle.getPosition());
+        GdxUtils.drawTextureRegionUnscaled(batch, textureRegion, bounding, 0.0f);
     }
 
     @Override
     public void delete() {
-        this.renderer.dispose();
+        textureRegion.getTexture().dispose();
     }
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import ru.mipt.bit.platformer.ColliderManager;
 import ru.mipt.bit.platformer.objects.Obstacle;
 import ru.mipt.bit.platformer.objects.Tank;
+import ru.mipt.bit.platformer.util.TileUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +14,13 @@ public class Level {
     private final List<Obstacle> obstacles;
     private final List<Tank> enemyTanks;
     private Tank playerTank;
+    private TileUtils tileUtils;
 
-    public Level(LevelGenerator levelGenerator) {
+    public Level(LevelGenerator levelGenerator, TileUtils tileUtils) {
         this.levelGenerator = levelGenerator;
         obstacles = new ArrayList<>();
         enemyTanks = new ArrayList<>();
+        this.tileUtils = tileUtils;
     }
 
     public List<Obstacle> getObstacles() {
@@ -43,13 +46,13 @@ public class Level {
                     case '_':
                         break;
                     case 'X':
-                        enemyTanks.add(new Tank(position.cpy(), speed, colliderManager));
+                        enemyTanks.add(new Tank(position.cpy(), speed, colliderManager, tileUtils));
                         break;
                     case 'P':
-                        playerTank = new Tank(position.cpy(), speed, colliderManager);
+                        playerTank = new Tank(position.cpy(), speed, colliderManager, tileUtils);
                         break;
                     case 'T':
-                        obstacles.add(new Obstacle(position.cpy()));
+                        obstacles.add(new Obstacle(position.cpy(), tileUtils));
                         break;
                     default:
                         throw new IllegalArgumentException("Unknown symbol in content of level");

@@ -1,18 +1,19 @@
 package ru.mipt.bit.platformer.renderer;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class LevelRenderer {
-    private Graphics mapGraphics;
+    private final Batch batch;
+    private final Graphics mapGraphics;
     private final List<Graphics> graphicsList;
 
-    public LevelRenderer() {
-        graphicsList = new ArrayList<>();
-    }
-
-    public void setMapGraphics(Graphics mapGraphics) {
+    public LevelRenderer(Graphics mapGraphics, Batch batch) {
         this.mapGraphics = mapGraphics;
+        this.batch = batch;
+        graphicsList = new ArrayList<>();
     }
 
     public void addGraphics(Graphics obstacleGraphics) {
@@ -21,9 +22,11 @@ public class LevelRenderer {
 
     public void levelRender() {
         mapGraphics.render();
+        batch.begin();
         for (var graphics : graphicsList) {
             graphics.render();
         }
+        batch.end();
     }
 
     public void delete() {

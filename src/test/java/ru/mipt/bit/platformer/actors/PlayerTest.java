@@ -17,9 +17,9 @@ class PlayerTest {
     @ParameterizedTest
     @CsvSource({"0, 0, 'UP', 0, 1", "10, 10, 'LEFT', 9, 10", "-10, 10, 'RIGHT', -9, 10", "5, 6, 'DOWN', 5, 5"})
     void act(int x0, int y0, String directionCode, int x1, int y1) throws NoSuchFieldException, IllegalAccessException {
-        TileUtils.setTileSize(new GridPoint2(10, 10));
+        TileUtils tileUtils = new TileUtils(new GridPoint2(10, 10));
         ColliderManager colliderManager = new ColliderManager();
-        Tank tank = new Tank(new GridPoint2(x0, y0), 0.1f, colliderManager);
+        Tank tank = new Tank(new GridPoint2(x0, y0), 0.1f, colliderManager, tileUtils);
         DIRECTIONS[] currDirection = {DIRECTIONS.valueOf(directionCode)};
         Player actor = new Player(tank, () -> currDirection[0]);
         actor.act();

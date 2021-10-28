@@ -10,7 +10,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Interpolation;
 
 import ru.mipt.bit.platformer.actors.AIRandom;
 import ru.mipt.bit.platformer.actors.Actor;
@@ -37,12 +36,12 @@ public class GameDesktopLauncher implements ApplicationListener {
     private Level level;
     private LevelRenderer levelRenderer;
     private ColliderManager colliderManager;
+    private TileUtils tileUtils;
     private final List<Actor> actors = new ArrayList<>();
 
     private void initLevelRenderer() {
         batch = new SpriteBatch();
-        levelRenderer = new LevelRenderer();
-        levelRenderer.setMapGraphics(new LibGdxMapGraphics(levelBackground, batch));
+        levelRenderer = new LevelRenderer(new LibGdxMapGraphics(levelBackground, batch), batch);
         if (level.getPlayerTank() != null) {
             levelRenderer.addGraphics(new LibGdxTankGraphics(level.getPlayerTank(), batch));
         }
@@ -68,7 +67,7 @@ public class GameDesktopLauncher implements ApplicationListener {
 
     private void initLevel() {
         // Level level = new Level(new LevelFromFileGenerator("src/main/resources/level.txt"));
-        level = new Level(new LevelRandomGenerator(10, 8));
+        level = new Level(new LevelRandomGenerator(10, 8), tileUtils);
         colliderManager = new ColliderManager();
         level.initObjects(colliderManager);
     }
@@ -76,8 +75,7 @@ public class GameDesktopLauncher implements ApplicationListener {
     private void initMap() {
         levelBackground = new TmxMapLoader().load("levelBackground.tmx");
         TiledMapTileLayer groundLayer = GdxUtils.getSingleLayer(levelBackground);
-        TileUtils.setTileSize(new GridPoint2(groundLayer.getTileWidth(), groundLayer.getTileHeight()));
-        TileUtils.setInterpolation(Interpolation.smooth);
+        tileUtils = new TileUtils(new GridPoint2(groundLayer.getTileWidth(), groundLayer.getTileHeight()));
     }
 
     private void initActors() {

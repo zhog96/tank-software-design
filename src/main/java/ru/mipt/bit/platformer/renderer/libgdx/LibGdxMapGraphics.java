@@ -10,7 +10,6 @@ import ru.mipt.bit.platformer.util.GdxUtils;
 
 public class LibGdxMapGraphics implements Graphics {
     private final MapRenderer mapRenderer;
-    private final Batch batch;
 
     public LibGdxMapGraphics(TiledMap tiledMap, Batch batch) {
         TiledMapTileLayer tileLayer = GdxUtils.getSingleLayer(tiledMap);
@@ -21,12 +20,10 @@ public class LibGdxMapGraphics implements Graphics {
         mapRenderer.getViewBounds().set(0f, 0f, viewWidth, viewHeight);
 
         this.mapRenderer = mapRenderer;
-        this.batch = batch;
     }
 
     @Override
     public void render() {
-        if (batch.isDrawing()) batch.end();
         this.mapRenderer.render();
     }
 
