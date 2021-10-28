@@ -1,6 +1,6 @@
 package ru.mipt.bit.platformer.actors;
 
-import ru.mipt.bit.platformer.input.DIRECTIONS;
+import ru.mipt.bit.platformer.input.Directions;
 import ru.mipt.bit.platformer.input.keyboard.KeyboardListener;
 import ru.mipt.bit.platformer.objects.Tank;
 
@@ -15,7 +15,7 @@ public class Player implements Actor {
 
     @Override
     public void act() {
-        DIRECTIONS direction = keyboardListener.pressed();
+        Directions direction = keyboardListener.pressed();
         if (direction != null) {
             targetTank.tryMove(direction.getDirection());
         }

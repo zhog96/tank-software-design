@@ -3,7 +3,7 @@ package ru.mipt.bit.platformer.actors;
 import com.badlogic.gdx.math.GridPoint2;
 import org.junit.jupiter.api.Test;
 import ru.mipt.bit.platformer.ColliderManager;
-import ru.mipt.bit.platformer.input.DIRECTIONS;
+import ru.mipt.bit.platformer.input.Directions;
 import ru.mipt.bit.platformer.objects.Tank;
 import ru.mipt.bit.platformer.util.TileUtils;
 
@@ -24,10 +24,10 @@ class AIRandomTest {
             Field gridPosition = tank.getClass().getDeclaredField("gridPosition");
             gridPosition.setAccessible(true);
             assertTrue(
-                    gridPosition.get(tank).equals(DIRECTIONS.UP.getDirection().getDeltaCoordinate())
-                    || gridPosition.get(tank).equals(DIRECTIONS.DOWN.getDirection().getDeltaCoordinate())
-                    || gridPosition.get(tank).equals(DIRECTIONS.LEFT.getDirection().getDeltaCoordinate())
-                    || gridPosition.get(tank).equals(DIRECTIONS.RIGHT.getDirection().getDeltaCoordinate())
+                    gridPosition.get(tank).equals(Directions.UP.getDirection().getDeltaCoordinate())
+                    || gridPosition.get(tank).equals(Directions.DOWN.getDirection().getDeltaCoordinate())
+                    || gridPosition.get(tank).equals(Directions.LEFT.getDirection().getDeltaCoordinate())
+                    || gridPosition.get(tank).equals(Directions.RIGHT.getDirection().getDeltaCoordinate())
             );
         }
     }

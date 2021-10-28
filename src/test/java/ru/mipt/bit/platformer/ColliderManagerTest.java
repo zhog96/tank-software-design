@@ -2,7 +2,7 @@ package ru.mipt.bit.platformer;
 
 import com.badlogic.gdx.math.GridPoint2;
 import org.junit.jupiter.api.Test;
-import ru.mipt.bit.platformer.input.DIRECTIONS;
+import ru.mipt.bit.platformer.input.Directions;
 import ru.mipt.bit.platformer.objects.Obstacle;
 import ru.mipt.bit.platformer.objects.Tank;
 import ru.mipt.bit.platformer.util.TileUtils;
@@ -23,10 +23,10 @@ class ColliderManagerTest {
         Field gridPosition = tank.getClass().getDeclaredField("gridPosition");
         gridPosition.setAccessible(true);
         assertAll(
-                () -> assertTrue(colliderManager.isFree(((GridPoint2) gridPosition.get(tank)).cpy().add(DIRECTIONS.UP.getDirection().getDeltaCoordinate()))),
-                () -> assertTrue(colliderManager.isFree(((GridPoint2) gridPosition.get(tank)).cpy().add(DIRECTIONS.RIGHT.getDirection().getDeltaCoordinate()))),
-                () -> assertFalse(colliderManager.isFree(((GridPoint2) gridPosition.get(tank)).cpy().add(DIRECTIONS.DOWN.getDirection().getDeltaCoordinate()))),
-                () -> assertFalse(colliderManager.isFree(((GridPoint2) gridPosition.get(tank)).cpy().add(DIRECTIONS.LEFT.getDirection().getDeltaCoordinate())))
+                () -> assertTrue(colliderManager.isFree(((GridPoint2) gridPosition.get(tank)).cpy().add(Directions.UP.getDirection().getDeltaCoordinate()))),
+                () -> assertTrue(colliderManager.isFree(((GridPoint2) gridPosition.get(tank)).cpy().add(Directions.RIGHT.getDirection().getDeltaCoordinate()))),
+                () -> assertFalse(colliderManager.isFree(((GridPoint2) gridPosition.get(tank)).cpy().add(Directions.DOWN.getDirection().getDeltaCoordinate()))),
+                () -> assertFalse(colliderManager.isFree(((GridPoint2) gridPosition.get(tank)).cpy().add(Directions.LEFT.getDirection().getDeltaCoordinate())))
         );
     }
 }

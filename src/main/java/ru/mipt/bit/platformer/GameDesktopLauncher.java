@@ -11,12 +11,12 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.GridPoint2;
 
-import ru.mipt.bit.platformer.actors.AIRandom;
+import org.awesome.ai.strategy.NotRecommendingAI;
+import ru.mipt.bit.platformer.actors.AIAwesome;
 import ru.mipt.bit.platformer.actors.Actor;
 import ru.mipt.bit.platformer.actors.Player;
 import ru.mipt.bit.platformer.input.keyboard.libgdx.LibGdxKeyboardListener;
 import ru.mipt.bit.platformer.level.Level;
-// import ru.mipt.bit.platformer.level.LevelFromFileGenerator;
 import ru.mipt.bit.platformer.level.LevelRandomGenerator;
 import ru.mipt.bit.platformer.renderer.LevelRenderer;
 import ru.mipt.bit.platformer.renderer.libgdx.LibGdxMapGraphics;
@@ -66,10 +66,9 @@ public class GameDesktopLauncher implements ApplicationListener {
     }
 
     private void initLevel() {
-        // Level level = new Level(new LevelFromFileGenerator("src/main/resources/level.txt"));
-        level = new Level(new LevelRandomGenerator(10, 8), tileUtils);
+        level = new Level(new LevelRandomGenerator(10, 8));
         colliderManager = new ColliderManager();
-        level.initObjects(colliderManager);
+        level.initObjects(colliderManager, tileUtils);
     }
 
     private void initMap() {
@@ -82,9 +81,7 @@ public class GameDesktopLauncher implements ApplicationListener {
         if (level.getPlayerTank() != null) {
             actors.add(new Player(level.getPlayerTank(), new LibGdxKeyboardListener()));
         }
-        for (var tank : level.getEnemyTanks()) {
-            actors.add(new AIRandom(tank));
-        }
+        actors.add(new AIAwesome(new NotRecommendingAI(), level));
     }
 
     @Override
@@ -123,7 +120,6 @@ public class GameDesktopLauncher implements ApplicationListener {
         update();
         cleanScreen();
         levelRenderer.levelRender();
-        if (batch.isDrawing()) batch.end();
     }
 
     @Override

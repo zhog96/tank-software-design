@@ -1,7 +1,7 @@
 package ru.mipt.bit.platformer.input.keyboard;
 
-import ru.mipt.bit.platformer.input.DIRECTIONS;
+import ru.mipt.bit.platformer.input.Directions;
 
 public interface KeyboardListener {
-    DIRECTIONS pressed();
+    Directions pressed();
 }

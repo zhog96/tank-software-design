@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class TileUtils {
-    private GridPoint2 tileSize;
+    private final GridPoint2 tileSize;
 
     public TileUtils(GridPoint2 tileSize) {
         this.tileSize = tileSize;

@@ -14,13 +14,11 @@ public class Level {
     private final List<Obstacle> obstacles;
     private final List<Tank> enemyTanks;
     private Tank playerTank;
-    private TileUtils tileUtils;
 
-    public Level(LevelGenerator levelGenerator, TileUtils tileUtils) {
+    public Level(LevelGenerator levelGenerator) {
         this.levelGenerator = levelGenerator;
         obstacles = new ArrayList<>();
         enemyTanks = new ArrayList<>();
-        this.tileUtils = tileUtils;
     }
 
     public List<Obstacle> getObstacles() {
@@ -35,7 +33,7 @@ public class Level {
         return playerTank;
     }
 
-    public void initObjects(ColliderManager colliderManager) {
+    public void initObjects(ColliderManager colliderManager, TileUtils tileUtils) {
         List<String> content = levelGenerator.generate();
         GridPoint2 position = new GridPoint2(0, 0);
         for (var line : content) {

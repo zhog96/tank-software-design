@@ -1,7 +1,7 @@
 package ru.mipt.bit.platformer.input.keyboard.libgdx;
 
 import com.badlogic.gdx.Gdx;
-import ru.mipt.bit.platformer.input.DIRECTIONS;
+import ru.mipt.bit.platformer.input.Directions;
 import ru.mipt.bit.platformer.input.keyboard.KeyboardListener;
 
 import static com.badlogic.gdx.Input.Keys.*;
@@ -9,18 +9,18 @@ import static com.badlogic.gdx.Input.Keys.D;
 
 public class LibGdxKeyboardListener implements KeyboardListener {
     @Override
-    public DIRECTIONS pressed() {
+    public Directions pressed() {
         if (Gdx.input.isKeyPressed(UP) || Gdx.input.isKeyPressed(W)) {
-            return DIRECTIONS.UP;
+            return Directions.UP;
         }
         if (Gdx.input.isKeyPressed(LEFT) || Gdx.input.isKeyPressed(A)) {
-            return DIRECTIONS.LEFT;
+            return Directions.LEFT;
         }
         if (Gdx.input.isKeyPressed(DOWN) || Gdx.input.isKeyPressed(S)) {
-            return DIRECTIONS.DOWN;
+            return Directions.DOWN;
         }
         if (Gdx.input.isKeyPressed(RIGHT) || Gdx.input.isKeyPressed(D)) {
-            return DIRECTIONS.RIGHT;
+            return Directions.RIGHT;
         }
         return null;
     }

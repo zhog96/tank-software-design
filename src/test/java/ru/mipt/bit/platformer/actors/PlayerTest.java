@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import ru.mipt.bit.platformer.ColliderManager;
-import ru.mipt.bit.platformer.input.DIRECTIONS;
+import ru.mipt.bit.platformer.input.Directions;
 import ru.mipt.bit.platformer.objects.Tank;
 import ru.mipt.bit.platformer.util.TileUtils;
 
@@ -20,7 +20,7 @@ class PlayerTest {
         TileUtils tileUtils = new TileUtils(new GridPoint2(10, 10));
         ColliderManager colliderManager = new ColliderManager();
         Tank tank = new Tank(new GridPoint2(x0, y0), 0.1f, colliderManager, tileUtils);
-        DIRECTIONS[] currDirection = {DIRECTIONS.valueOf(directionCode)};
+        Directions[] currDirection = {Directions.valueOf(directionCode)};
         Player actor = new Player(tank, () -> currDirection[0]);
         actor.act();
         Field gridPosition = tank.getClass().getDeclaredField("gridPosition");
