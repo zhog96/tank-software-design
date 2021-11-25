@@ -12,6 +12,10 @@ public class TileUtils {
         this.tileSize = tileSize;
     }
 
+    public GridPoint2 getTileSize() {
+        return tileSize;
+    }
+
     public Vector2 calculateTileCenter(GridPoint2 tileCoordinates) {
         int tileWidth = tileSize.x;
         int tileHeight = tileSize.y;

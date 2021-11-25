@@ -1,7 +1,7 @@
 package ru.mipt.bit.platformer.actors;
 
-import ru.mipt.bit.platformer.input.Directions;
-import ru.mipt.bit.platformer.objects.Tank;
+import ru.mipt.bit.platformer.input.directions.Directions;
+import ru.mipt.bit.platformer.objects.tank.Tank;
 
 import java.util.Random;
 

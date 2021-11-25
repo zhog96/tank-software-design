@@ -1,14 +1,14 @@
-package ru.mipt.bit.platformer.renderer.libgdx;
+package ru.mipt.bit.platformer.renderer.libgdx.units;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import ru.mipt.bit.platformer.objects.Tank;
-import ru.mipt.bit.platformer.renderer.Graphics;
+import ru.mipt.bit.platformer.objects.tank.Tank;
+import ru.mipt.bit.platformer.renderer.UnitGraphics;
 import ru.mipt.bit.platformer.util.GdxUtils;
 
-public class LibGdxTankGraphics implements Graphics {
+public class LibGdxTankGraphics implements UnitGraphics {
     private final Rectangle bounding;
     private final Batch batch;
     private final TextureRegion textureRegion;
@@ -30,5 +30,15 @@ public class LibGdxTankGraphics implements Graphics {
     @Override
     public void delete() {
         textureRegion.getTexture().dispose();
+    }
+
+    @Override
+    public Rectangle getUnitBounding() {
+        return bounding;
+    }
+
+    @Override
+    public float getHealth() {
+        return tank.getHealthNormalized();
     }
 }

@@ -3,7 +3,8 @@ package ru.mipt.bit.platformer.level;
 import com.badlogic.gdx.math.GridPoint2;
 import ru.mipt.bit.platformer.ColliderManager;
 import ru.mipt.bit.platformer.objects.Obstacle;
-import ru.mipt.bit.platformer.objects.Tank;
+import ru.mipt.bit.platformer.objects.tank.Light;
+import ru.mipt.bit.platformer.objects.tank.Tank;
 import ru.mipt.bit.platformer.util.TileUtils;
 
 import java.util.ArrayList;
@@ -33,6 +34,15 @@ public class Level {
         return playerTank;
     }
 
+    public void update(float deltaTime) {
+        for (var tank : enemyTanks) {
+            tank.update(deltaTime);
+        }
+        if (playerTank != null) {
+            playerTank.update(deltaTime);
+        }
+    }
+
     public void initObjects(ColliderManager colliderManager, TileUtils tileUtils) {
         List<String> content = levelGenerator.generate();
         GridPoint2 position = new GridPoint2(0, 0);
@@ -44,10 +54,10 @@ public class Level {
                     case '_':
                         break;
                     case 'X':
-                        enemyTanks.add(new Tank(position.cpy(), speed, colliderManager, tileUtils));
+                        enemyTanks.add(new Tank(position.cpy(), speed, colliderManager, tileUtils, new Light()));
                         break;
                     case 'P':
-                        playerTank = new Tank(position.cpy(), speed, colliderManager, tileUtils);
+                        playerTank = new Tank(position.cpy(), speed, colliderManager, tileUtils, new Light());
                         break;
                     case 'T':
                         obstacles.add(new Obstacle(position.cpy(), tileUtils));

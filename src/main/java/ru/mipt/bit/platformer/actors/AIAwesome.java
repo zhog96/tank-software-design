@@ -9,9 +9,9 @@ import org.awesome.ai.state.immovable.Obstacle;
 import org.awesome.ai.state.movable.Bot;
 import org.awesome.ai.state.movable.Orientation;
 import org.awesome.ai.state.movable.Player;
-import ru.mipt.bit.platformer.input.Directions;
+import ru.mipt.bit.platformer.input.directions.Directions;
 import ru.mipt.bit.platformer.level.Level;
-import ru.mipt.bit.platformer.objects.Tank;
+import ru.mipt.bit.platformer.objects.tank.Tank;
 import ru.mipt.bit.platformer.util.Movement;
 
 import java.lang.reflect.Field;

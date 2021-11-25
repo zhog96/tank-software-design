@@ -1,13 +1,13 @@
-package ru.mipt.bit.platformer.input.keyboard.libgdx;
+package ru.mipt.bit.platformer.input.directions.libgdx;
 
 import com.badlogic.gdx.Gdx;
-import ru.mipt.bit.platformer.input.Directions;
-import ru.mipt.bit.platformer.input.keyboard.KeyboardListener;
+import ru.mipt.bit.platformer.input.directions.Directions;
+import ru.mipt.bit.platformer.input.directions.DirectionsListener;
 
 import static com.badlogic.gdx.Input.Keys.*;
 import static com.badlogic.gdx.Input.Keys.D;
 
-public class LibGdxKeyboardListener implements KeyboardListener {
+public class LibGdxDirectionsListener implements DirectionsListener {
     @Override
     public Directions pressed() {
         if (Gdx.input.isKeyPressed(UP) || Gdx.input.isKeyPressed(W)) {

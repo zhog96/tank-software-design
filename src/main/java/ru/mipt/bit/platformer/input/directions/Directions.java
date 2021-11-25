@@ -1,4 +1,4 @@
-package ru.mipt.bit.platformer.input;
+package ru.mipt.bit.platformer.input.directions;
 
 import ru.mipt.bit.platformer.util.Direction;
 
