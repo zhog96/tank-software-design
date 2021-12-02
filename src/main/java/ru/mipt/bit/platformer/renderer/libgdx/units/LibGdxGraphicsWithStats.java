@@ -12,7 +12,7 @@ import ru.mipt.bit.platformer.util.GdxUtils;
 import ru.mipt.bit.platformer.util.TileUtils;
 
 /**
- * Порт
+ * Адаптер
  */
 
 public class LibGdxGraphicsWithStats implements UnitGraphics {

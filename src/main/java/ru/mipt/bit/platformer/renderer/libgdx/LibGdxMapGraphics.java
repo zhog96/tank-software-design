@@ -9,7 +9,7 @@ import ru.mipt.bit.platformer.renderer.Graphics;
 import ru.mipt.bit.platformer.util.GdxUtils;
 
 /**
- * Порт
+ * Адаптер
  */
 
 public class LibGdxMapGraphics implements Graphics {

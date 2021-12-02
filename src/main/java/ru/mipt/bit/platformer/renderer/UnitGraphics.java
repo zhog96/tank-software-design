@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Rectangle;
 
 /**
  * Порт
- * UseCase
  */
 
 public interface UnitGraphics extends Graphics {

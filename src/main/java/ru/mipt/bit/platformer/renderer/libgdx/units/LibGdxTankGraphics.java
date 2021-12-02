@@ -9,7 +9,7 @@ import ru.mipt.bit.platformer.renderer.UnitGraphics;
 import ru.mipt.bit.platformer.util.GdxUtils;
 
 /**
- * Порт
+ * Адаптер
  */
 
 public class LibGdxTankGraphics implements UnitGraphics {

@@ -14,6 +14,10 @@ import ru.mipt.bit.platformer.util.TileUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Infrastructure
+ */
+
 public class Level implements Observable {
     private final LevelGenerator levelGenerator;
     private final List<Obstacle> obstacles;

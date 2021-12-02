@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Порт
+ * Infrastructure
  */
 
 public class LevelRenderer implements Observer {
