@@ -19,8 +19,8 @@ class TankTest {
         tank.tryMove(Directions.UP.getDirection());
         tank.update(0.5f);
         assertAll(
-                () -> assertFalse(colliderManager.isFree(new GridPoint2(1, 0))),
-                () -> assertFalse(colliderManager.isFree(new GridPoint2(1, 1)))
+                () -> assertNotNull(colliderManager.isTakenBy(new GridPoint2(1, 0))),
+                () -> assertNotNull(colliderManager.isTakenBy(new GridPoint2(1, 1)))
         );
     }
 }

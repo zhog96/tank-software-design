@@ -1,5 +1,6 @@
 package ru.mipt.bit.platformer.objects.tank;
 
+import ru.mipt.bit.platformer.level.Level;
 import ru.mipt.bit.platformer.objects.Bullet;
 import ru.mipt.bit.platformer.util.Direction;
 
@@ -18,12 +19,14 @@ public class Heavy implements TankState {
     }
 
     @Override
-    public void tryShoot() {}
+    public boolean canShoot() {
+        return false;
+    }
 
     @Override
-    public void takeDamage(Bullet bullet) {
+    public void takeDamage(Bullet bullet, Level level) {
         if (bullet.getDamage() > 0) {
-            // destroy tank // goes with hw7
+            level.removeTank(tank);
         }
     }
 

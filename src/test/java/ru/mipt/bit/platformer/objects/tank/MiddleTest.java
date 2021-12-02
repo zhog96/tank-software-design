@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import org.junit.jupiter.api.Test;
 import ru.mipt.bit.platformer.ColliderManager;
 import ru.mipt.bit.platformer.input.directions.Directions;
+import ru.mipt.bit.platformer.level.Level;
 import ru.mipt.bit.platformer.objects.Bullet;
 import ru.mipt.bit.platformer.util.TileUtils;
 
@@ -24,15 +25,15 @@ class MiddleTest {
                 () -> {
                     tank.update(1.0f);
                     assertAll(
-                            () -> assertFalse(colliderManager.isFree(new GridPoint2(1, 0))),
-                            () -> assertFalse(colliderManager.isFree(new GridPoint2(1, 1)))
+                            () -> assertNotNull(colliderManager.isTakenBy(new GridPoint2(1, 0))),
+                            () -> assertNotNull(colliderManager.isTakenBy(new GridPoint2(1, 1)))
                     );
                 },
                 () -> {
                     tank.update(1.0f);
                     assertAll(
-                            () -> assertTrue(colliderManager.isFree(new GridPoint2(1, 0))),
-                            () -> assertFalse(colliderManager.isFree(new GridPoint2(1, 1)))
+                            () -> assertNull(colliderManager.isTakenBy(new GridPoint2(1, 0))),
+                            () -> assertNotNull(colliderManager.isTakenBy(new GridPoint2(1, 1)))
                     );
                 }
         );
@@ -45,14 +46,14 @@ class MiddleTest {
         assertAll(
                 () -> {
                     Tank tank = new Tank(new GridPoint2(1, 0), 1.0f, colliderManager, tileUtils, new Middle());
-                    tank.takeDamage(new Bullet(0));
+                    tank.takeDamage(new Bullet(new GridPoint2(0, 0), Directions.UP.getDirection(), 0, 1.0f, colliderManager, tileUtils, null), null);
                     Field state = tank.getClass().getDeclaredField("tankState");
                     state.setAccessible(true);
                     assertTrue(state.get(tank) instanceof Middle);
                 },
                 () -> {
                     Tank tank = new Tank(new GridPoint2(1, 0), 1.0f, colliderManager, tileUtils, new Middle());
-                    tank.takeDamage(new Bullet(1));
+                    tank.takeDamage(new Bullet(new GridPoint2(0, 0), Directions.UP.getDirection(), 1, 1.0f, colliderManager, tileUtils, null), null);
                     Field state = tank.getClass().getDeclaredField("tankState");
                     state.setAccessible(true);
                     assertTrue(state.get(tank) instanceof Heavy);

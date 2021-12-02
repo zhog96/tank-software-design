@@ -16,15 +16,13 @@ import ru.mipt.bit.platformer.actors.AIAwesome;
 import ru.mipt.bit.platformer.actors.Actor;
 import ru.mipt.bit.platformer.actors.Player;
 import ru.mipt.bit.platformer.input.directions.libgdx.LibGdxDirectionsListener;
+import ru.mipt.bit.platformer.input.shootlistener.libgdx.LibGdxShootListener;
 import ru.mipt.bit.platformer.input.togglelistener.ToggleListener;
 import ru.mipt.bit.platformer.input.togglelistener.libgdx.LibGdxToggleListener;
 import ru.mipt.bit.platformer.level.Level;
 import ru.mipt.bit.platformer.level.LevelRandomGenerator;
 import ru.mipt.bit.platformer.renderer.LevelRenderer;
 import ru.mipt.bit.platformer.renderer.libgdx.LibGdxMapGraphics;
-import ru.mipt.bit.platformer.renderer.libgdx.LibGdxObstacleGraphics;
-import ru.mipt.bit.platformer.renderer.libgdx.units.LibGdxTankGraphics;
-import ru.mipt.bit.platformer.renderer.libgdx.units.LibGdxGraphicsWithStats;
 import ru.mipt.bit.platformer.util.TileUtils;
 import ru.mipt.bit.platformer.util.GdxUtils;
 
@@ -38,41 +36,22 @@ public class GameDesktopLauncher implements ApplicationListener {
     private TiledMap levelBackground;
     private Level level;
     private LevelRenderer levelRenderer;
-    private ColliderManager colliderManager;
     private TileUtils tileUtils;
     private final List<Actor> actors = new ArrayList<>();
 
-    private void initLevelRenderer() {
+    private void setupLevelRenderer() {
         batch = new SpriteBatch();
         ToggleListener toggleListener = new LibGdxToggleListener();
         levelRenderer = new LevelRenderer(new LibGdxMapGraphics(levelBackground, batch), batch, toggleListener);
-        if (level.getPlayerTank() != null) {
-            levelRenderer.addGraphics(new LibGdxGraphicsWithStats(new LibGdxTankGraphics(level.getPlayerTank(), batch), toggleListener, batch, tileUtils));
-        }
-        for (var tank : level.getEnemyTanks()) {
-            levelRenderer.addGraphics(new LibGdxGraphicsWithStats(new LibGdxTankGraphics(tank, batch), toggleListener, batch, tileUtils));
-        }
-        for (var obstacle : level.getObstacles()) {
-            levelRenderer.addGraphics(new LibGdxObstacleGraphics(obstacle, batch));
-        }
+        level.subscribe(levelRenderer);
     }
 
-    private void initColliders() {
-        if (level.getPlayerTank() != null) {
-            colliderManager.addCollider(level.getPlayerTank());
-        }
-        for (var tank : level.getEnemyTanks()) {
-            colliderManager.addCollider(tank);
-        }
-        for (var obstacle : level.getObstacles()) {
-            colliderManager.addCollider(obstacle);
-        }
-    }
-
-    private void initLevel() {
+    private void setupLevel() {
         level = new Level(new LevelRandomGenerator(10, 8));
-        colliderManager = new ColliderManager();
-        level.initObjects(colliderManager, tileUtils);
+    }
+
+    private void initLevelObjects() {
+        level.initObjects(tileUtils);
     }
 
     private void initMap() {
@@ -81,9 +60,13 @@ public class GameDesktopLauncher implements ApplicationListener {
         tileUtils = new TileUtils(new GridPoint2(groundLayer.getTileWidth(), groundLayer.getTileHeight()));
     }
 
+    private void initColliders() {
+        level.initColliders();
+    }
+
     private void initActors() {
         if (level.getPlayerTank() != null) {
-            actors.add(new Player(level.getPlayerTank(), new LibGdxDirectionsListener()));
+            actors.add(new Player(level.getPlayerTank(), new LibGdxDirectionsListener(), new LibGdxShootListener()));
         }
         actors.add(new AIAwesome(new NotRecommendingAI(), level));
     }
@@ -91,10 +74,11 @@ public class GameDesktopLauncher implements ApplicationListener {
     @Override
     public void create() {
         initMap();
-        initLevel();
+        setupLevel();
+        setupLevelRenderer();
+        initLevelObjects();
         initColliders();
         initActors();
-        initLevelRenderer();
     }
 
     private void cleanScreen() {

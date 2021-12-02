@@ -24,10 +24,10 @@ class ColliderManagerTest {
         Field gridPosition = tank.getClass().getDeclaredField("gridPosition");
         gridPosition.setAccessible(true);
         assertAll(
-                () -> assertTrue(colliderManager.isFree(((GridPoint2) gridPosition.get(tank)).cpy().add(Directions.UP.getDirection().getDeltaCoordinate()))),
-                () -> assertTrue(colliderManager.isFree(((GridPoint2) gridPosition.get(tank)).cpy().add(Directions.RIGHT.getDirection().getDeltaCoordinate()))),
-                () -> assertFalse(colliderManager.isFree(((GridPoint2) gridPosition.get(tank)).cpy().add(Directions.DOWN.getDirection().getDeltaCoordinate()))),
-                () -> assertFalse(colliderManager.isFree(((GridPoint2) gridPosition.get(tank)).cpy().add(Directions.LEFT.getDirection().getDeltaCoordinate())))
+                () -> assertNull(colliderManager.isTakenBy(((GridPoint2) gridPosition.get(tank)).cpy().add(Directions.UP.getDirection().getDeltaCoordinate()))),
+                () -> assertNull(colliderManager.isTakenBy(((GridPoint2) gridPosition.get(tank)).cpy().add(Directions.RIGHT.getDirection().getDeltaCoordinate()))),
+                () -> assertNotNull(colliderManager.isTakenBy(((GridPoint2) gridPosition.get(tank)).cpy().add(Directions.DOWN.getDirection().getDeltaCoordinate()))),
+                () -> assertNotNull(colliderManager.isTakenBy(((GridPoint2) gridPosition.get(tank)).cpy().add(Directions.LEFT.getDirection().getDeltaCoordinate())))
         );
     }
 }

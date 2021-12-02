@@ -31,6 +31,10 @@ public class Movement {
         return toGridPosition.equals(fromGridPosition) || movementProgress.finishedMoving();
     }
 
+    public boolean halfWayMoving() {
+        return movementProgress.getProgress() > 0.5f;
+    }
+
     public Vector2 calculatePosition() {
         return tileUtils.calculatePositionBetween(fromGridPosition, toGridPosition, movementProgress.getProgress());
     }

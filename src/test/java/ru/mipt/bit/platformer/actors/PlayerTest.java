@@ -22,7 +22,7 @@ class PlayerTest {
         ColliderManager colliderManager = new ColliderManager();
         Tank tank = new Tank(new GridPoint2(x0, y0), 0.1f, colliderManager, tileUtils, new Light());
         Directions[] currDirection = {Directions.valueOf(directionCode)};
-        Player actor = new Player(tank, () -> currDirection[0]);
+        Player actor = new Player(tank, () -> currDirection[0], () -> false);
         actor.act();
         Field gridPosition = tank.getClass().getDeclaredField("gridPosition");
         gridPosition.setAccessible(true);

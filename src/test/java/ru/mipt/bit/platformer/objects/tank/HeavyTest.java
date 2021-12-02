@@ -24,15 +24,15 @@ class HeavyTest {
                 () -> {
                     tank.update(2.0f);
                     assertAll(
-                            () -> assertFalse(colliderManager.isFree(new GridPoint2(1, 0))),
-                            () -> assertFalse(colliderManager.isFree(new GridPoint2(1, 1)))
+                            () -> assertNotNull(colliderManager.isTakenBy(new GridPoint2(1, 0))),
+                            () -> assertNotNull(colliderManager.isTakenBy(new GridPoint2(1, 1)))
                     );
                 },
                 () -> {
                     tank.update(1.0f);
                     assertAll(
-                            () -> assertTrue(colliderManager.isFree(new GridPoint2(1, 0))),
-                            () -> assertFalse(colliderManager.isFree(new GridPoint2(1, 1)))
+                            () -> assertNull(colliderManager.isTakenBy(new GridPoint2(1, 0))),
+                            () -> assertNotNull(colliderManager.isTakenBy(new GridPoint2(1, 1)))
                     );
                 }
         );
@@ -45,7 +45,7 @@ class HeavyTest {
         assertAll(
                 () -> {
                     Tank tank = new Tank(new GridPoint2(1, 0), 1.0f, colliderManager, tileUtils, new Heavy());
-                    tank.takeDamage(new Bullet(0));
+                    tank.takeDamage(new Bullet(new GridPoint2(0, 0), Directions.UP.getDirection(), 0, 1.0f, colliderManager, tileUtils, null), null);
                     Field state = tank.getClass().getDeclaredField("tankState");
                     state.setAccessible(true);
                     assertTrue(state.get(tank) instanceof Heavy);

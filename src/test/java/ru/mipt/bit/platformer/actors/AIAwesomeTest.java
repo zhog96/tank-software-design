@@ -22,16 +22,8 @@ class AIAwesomeTest {
         TileUtils tileUtils = new TileUtils(new GridPoint2(10, 10));
         Level level = new Level(new LevelFromFileGenerator("src/test/resources/level_ai_awesome.txt"));
         ColliderManager colliderManager = new ColliderManager();
-        level.initObjects(colliderManager, tileUtils);
-        if (level.getPlayerTank() != null) {
-            colliderManager.addCollider(level.getPlayerTank());
-        }
-        for (var tank : level.getEnemyTanks()) {
-            colliderManager.addCollider(tank);
-        }
-        for (var obstacle : level.getObstacles()) {
-            colliderManager.addCollider(obstacle);
-        }
+        level.initObjects(tileUtils);
+        level.initColliders();
         AIAwesome actor = new AIAwesome(
                 gameState -> gameState.getBots().stream().map((var bot) -> new Recommendation(bot, Action.MoveEast)).collect(Collectors.toList()),
                 level

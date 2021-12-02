@@ -1,5 +1,6 @@
 package ru.mipt.bit.platformer.objects.tank;
 
+import ru.mipt.bit.platformer.level.Level;
 import ru.mipt.bit.platformer.objects.Bullet;
 import ru.mipt.bit.platformer.util.Direction;
 
@@ -18,14 +19,14 @@ public class Light implements TankState {
     }
 
     @Override
-    public void tryShoot() {
-        // goes with hw7
+    public boolean canShoot() {
+        return true;
     }
 
     @Override
-    public void takeDamage(Bullet bullet) {
+    public void takeDamage(Bullet bullet, Level level) {
         if (bullet.getDamage() > 2) {
-            // destroy tank // goes with hw7
+            level.removeTank(tank);
         } else if (bullet.getDamage() == 2) {
             tank.changeState(new Heavy(tank));
         } else if (bullet.getDamage() == 1) {

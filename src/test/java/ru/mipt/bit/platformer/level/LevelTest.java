@@ -18,7 +18,7 @@ class LevelTest {
     void initObjectsCheckPlayerPosition(String contentString, int x, int y ) throws NoSuchFieldException, IllegalAccessException {
         TileUtils tileUtils = new TileUtils(new GridPoint2(1, 1));
         Level level = new Level(() -> Arrays.asList(contentString.split(",")));
-        level.initObjects(new ColliderManager(), tileUtils);
+        level.initObjects(tileUtils);
         Tank tank = level.getPlayerTank();
         Field gridPosition = tank.getClass().getDeclaredField("gridPosition");
         gridPosition.setAccessible(true);
@@ -30,7 +30,7 @@ class LevelTest {
     void initObjectsCheckObstaclePosition(String contentString, int obstacleNum, int x, int y ) {
         TileUtils tileUtils = new TileUtils(new GridPoint2(1, 1));
         Level level = new Level(() -> Arrays.asList(contentString.split(",")));
-        level.initObjects(new ColliderManager(), tileUtils);
+        level.initObjects(tileUtils);
         assertThat(level.getObstacles().get(obstacleNum).getGridPosition()).isEqualToComparingFieldByField(new GridPoint2(x, y));
     }
 
@@ -39,7 +39,7 @@ class LevelTest {
     void initObjectsCheckEnemyTankPosition(String contentString, int enemyTankNum, int x, int y ) throws NoSuchFieldException, IllegalAccessException {
         TileUtils tileUtils = new TileUtils(new GridPoint2(1, 1));
         Level level = new Level(() -> Arrays.asList(contentString.split(",")));
-        level.initObjects(new ColliderManager(), tileUtils);
+        level.initObjects(tileUtils);
         Tank tank = level.getEnemyTanks().get(enemyTankNum);
         Field gridPosition = tank.getClass().getDeclaredField("gridPosition");
         gridPosition.setAccessible(true);

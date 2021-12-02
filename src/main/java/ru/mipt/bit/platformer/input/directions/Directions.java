@@ -17,4 +17,13 @@ public enum Directions {
     public Direction getDirection() {
         return direction;
     }
+
+    public static Direction directionByAngle(float angle) {
+        for (var directions : Directions.values()) {
+            if (Math.abs(angle - directions.getDirection().getAngle()) < 0.1f) {
+                return directions.getDirection();
+            }
+        }
+        return null;
+    }
 }

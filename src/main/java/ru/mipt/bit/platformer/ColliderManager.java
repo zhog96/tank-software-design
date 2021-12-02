@@ -13,10 +13,14 @@ public class ColliderManager {
         colliders.add(collider);
     }
 
-    public boolean isFree(GridPoint2 targetGridPosition) {
+    public void removeCollider(Collider collider) {
+        colliders.remove(collider);
+    }
+
+    public Collider isTakenBy(GridPoint2 targetGridPosition) {
         for (var collider : colliders) {
-            if (collider.collides(targetGridPosition)) return false;
+            if (collider.collides(targetGridPosition)) return collider;
         }
-        return true;
+        return null;
     }
 }
