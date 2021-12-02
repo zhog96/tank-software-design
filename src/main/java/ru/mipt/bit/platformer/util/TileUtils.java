@@ -5,6 +5,10 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Domain
+ */
+
 public class TileUtils {
     private final GridPoint2 tileSize;
 

@@ -14,6 +14,10 @@ import ru.mipt.bit.platformer.util.Observer;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Порт
+ */
+
 public class LevelRenderer implements Observer {
     private final Batch batch;
     private final Graphics mapGraphics;

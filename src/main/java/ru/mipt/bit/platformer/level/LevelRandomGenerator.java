@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Адаптер
+ */
+
 public class LevelRandomGenerator implements LevelGenerator {
     private final int levelWidth;
     private final int levelHeight;

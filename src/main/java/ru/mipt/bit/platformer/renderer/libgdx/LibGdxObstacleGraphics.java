@@ -8,6 +8,10 @@ import ru.mipt.bit.platformer.objects.Obstacle;
 import ru.mipt.bit.platformer.renderer.Graphics;
 import ru.mipt.bit.platformer.util.GdxUtils;
 
+/**
+ * Порт
+ */
+
 public class LibGdxObstacleGraphics implements Graphics {
     private final Rectangle bounding;
     private final Batch batch;

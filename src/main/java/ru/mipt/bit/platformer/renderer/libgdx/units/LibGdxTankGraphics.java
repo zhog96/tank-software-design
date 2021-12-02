@@ -8,6 +8,10 @@ import ru.mipt.bit.platformer.objects.tank.Tank;
 import ru.mipt.bit.platformer.renderer.UnitGraphics;
 import ru.mipt.bit.platformer.util.GdxUtils;
 
+/**
+ * Порт
+ */
+
 public class LibGdxTankGraphics implements UnitGraphics {
     private final Rectangle bounding;
     private final Batch batch;

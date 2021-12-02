@@ -6,6 +6,10 @@ import ru.mipt.bit.platformer.objects.Collider;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Domain
+ */
+
 public class ColliderManager {
     private final List<Collider> colliders = new ArrayList<>();
 

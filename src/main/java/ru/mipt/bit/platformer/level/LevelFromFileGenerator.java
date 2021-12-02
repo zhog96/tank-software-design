@@ -5,6 +5,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+/**
+ * Адаптер
+ */
+
 public class LevelFromFileGenerator implements LevelGenerator {
     private List<String> content;
 

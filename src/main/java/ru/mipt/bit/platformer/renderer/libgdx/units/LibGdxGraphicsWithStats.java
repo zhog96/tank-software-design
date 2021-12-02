@@ -11,6 +11,10 @@ import ru.mipt.bit.platformer.renderer.UnitGraphics;
 import ru.mipt.bit.platformer.util.GdxUtils;
 import ru.mipt.bit.platformer.util.TileUtils;
 
+/**
+ * Порт
+ */
+
 public class LibGdxGraphicsWithStats implements UnitGraphics {
     private final UnitGraphics unit;
     private final Batch batch;

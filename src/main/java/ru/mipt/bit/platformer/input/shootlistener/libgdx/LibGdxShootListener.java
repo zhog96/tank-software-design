@@ -5,6 +5,10 @@ import ru.mipt.bit.platformer.input.shootlistener.ShootListener;
 
 import static com.badlogic.gdx.Input.Keys.SPACE;
 
+/**
+ * Адаптер
+ */
+
 public class LibGdxShootListener implements ShootListener {
     @Override
     public boolean shootPressed() {

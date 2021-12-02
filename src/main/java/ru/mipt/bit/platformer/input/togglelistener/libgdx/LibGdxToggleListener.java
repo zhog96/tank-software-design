@@ -5,6 +5,10 @@ import ru.mipt.bit.platformer.input.togglelistener.ToggleListener;
 
 import static com.badlogic.gdx.Input.Keys.L;
 
+/**
+ * Адаптер
+ */
+
 public class LibGdxToggleListener implements ToggleListener {
     private boolean toggle = false;
     private boolean waitRelaxation = false;

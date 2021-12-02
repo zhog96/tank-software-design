@@ -5,7 +5,10 @@ import ru.mipt.bit.platformer.input.directions.Directions;
 import ru.mipt.bit.platformer.input.directions.DirectionsListener;
 
 import static com.badlogic.gdx.Input.Keys.*;
-import static com.badlogic.gdx.Input.Keys.D;
+
+/**
+ * Адаптер
+ */
 
 public class LibGdxDirectionsListener implements DirectionsListener {
     @Override

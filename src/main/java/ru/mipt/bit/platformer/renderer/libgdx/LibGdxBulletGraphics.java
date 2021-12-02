@@ -5,9 +5,12 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import ru.mipt.bit.platformer.objects.Bullet;
-import ru.mipt.bit.platformer.objects.Obstacle;
 import ru.mipt.bit.platformer.renderer.Graphics;
 import ru.mipt.bit.platformer.util.GdxUtils;
+
+/**
+ * Порт
+ */
 
 public class LibGdxBulletGraphics implements Graphics {
     private final Rectangle bounding;

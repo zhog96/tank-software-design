@@ -3,6 +3,10 @@ package ru.mipt.bit.platformer.util;
 import static com.badlogic.gdx.math.MathUtils.isEqual;
 import static com.badlogic.gdx.math.MathUtils.clamp;
 
+/**
+ * Domain
+ */
+
 public class MovementProgress {
     private float progress;
     private final float speed;

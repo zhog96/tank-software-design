@@ -2,6 +2,10 @@ package ru.mipt.bit.platformer.util;
 
 import com.badlogic.gdx.math.GridPoint2;
 
+/**
+ * Domain
+ */
+
 public class Direction {
     private final GridPoint2 deltaCoordinate;
     private final float angle;

@@ -8,6 +8,10 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import ru.mipt.bit.platformer.renderer.Graphics;
 import ru.mipt.bit.platformer.util.GdxUtils;
 
+/**
+ * Порт
+ */
+
 public class LibGdxMapGraphics implements Graphics {
     private final MapRenderer mapRenderer;
 

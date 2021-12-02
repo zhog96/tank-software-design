@@ -19,8 +19,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * По задумке тут должен быть и чуть позже появиться Адаптер
+ */
+
 public class AIAwesome implements Actor {
-    // Интерфейс Actor может управлять и не одним объектом, как например тут
     private final AI ai;
     private final Level level;
     private final List<Orientation> orientations = Arrays.asList(Orientation.W, Orientation.N, Orientation.E, Orientation.S);
