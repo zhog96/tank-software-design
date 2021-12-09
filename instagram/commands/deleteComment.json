@@ -1,0 +1,12 @@
+{
+  "Delete Comment": {
+    "query": {
+      "user_id": "string",
+      "comment_id": "string",
+      "token": "string"
+    },
+    "response": {
+      "statusCode": "int"
+    }
+  }
+}

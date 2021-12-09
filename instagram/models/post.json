@@ -1,0 +1,7 @@
+{
+  "Post": {
+    "image": "Image",
+    "like_count": "int",
+    "is_liked_by_us": "bool"
+  }
+}

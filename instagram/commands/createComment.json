@@ -1,0 +1,13 @@
+{
+  "Create Comment": {
+    "query": {
+      "user_id": "string",
+      "post_id": "string",
+      "content": "string",
+      "token": "string"
+    },
+    "response": {
+      "statusCode": "int"
+    }
+  }
+}
