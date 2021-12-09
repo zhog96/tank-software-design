@@ -1,0 +1,12 @@
+{
+  "Delete Post": {
+    "query": {
+      "user_id": "string",
+      "post_id": "string",
+      "token": "string"
+    },
+    "response": {
+      "statusCode": "int"
+    }
+  }
+}

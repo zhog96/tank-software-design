@@ -1,0 +1,11 @@
+{
+  "Get next comments by ids": {
+    "query": {
+      "comment_ids": "string[]",
+      "token": "string"
+    },
+    "response": {
+      "comments": "Comment[]"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "Get post by id": {
+    "query": {
+      "posts_id": "string[]",
+      "token": "string"
+    },
+    "response": {
+      "posts": "Post[]"
+    }
+  }
+}
