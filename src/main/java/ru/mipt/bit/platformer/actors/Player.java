@@ -1,9 +1,15 @@
 package ru.mipt.bit.platformer.actors;
 
+import ru.mipt.bit.platformer.actors.commands.ActionCommand;
+import ru.mipt.bit.platformer.actors.commands.MoveCommand;
+import ru.mipt.bit.platformer.actors.commands.ShootCommand;
 import ru.mipt.bit.platformer.input.directions.Directions;
 import ru.mipt.bit.platformer.input.directions.DirectionsListener;
 import ru.mipt.bit.platformer.input.shootlistener.ShootListener;
 import ru.mipt.bit.platformer.objects.tank.Tank;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player implements Actor {
     private final Tank targetTank;
@@ -17,13 +23,15 @@ public class Player implements Actor {
     }
 
     @Override
-    public void act() {
+    public List<ActionCommand> getCommands(float deltaTime) {
+        List<ActionCommand> commands = new ArrayList<>();
         Directions direction = directionsListener.pressed();
         if (direction != null) {
-            targetTank.tryMove(direction.getDirection());
+            commands.add(new MoveCommand(targetTank, direction.getDirection()));
         }
         if (shootListener.shootPressed()) {
-            targetTank.tryShoot();
+            commands.add(new ShootCommand(targetTank));
         }
+        return commands;
     }
 }

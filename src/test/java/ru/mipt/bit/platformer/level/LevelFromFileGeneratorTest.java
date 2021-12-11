@@ -2,6 +2,8 @@ package ru.mipt.bit.platformer.level;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import ru.mipt.bit.platformer.level.generator.LevelFromFileGenerator;
+import ru.mipt.bit.platformer.level.generator.LevelGenerator;
 
 import static org.junit.jupiter.api.Assertions.*;
 

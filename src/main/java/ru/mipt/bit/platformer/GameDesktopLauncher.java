@@ -11,23 +11,25 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.GridPoint2;
 
-import org.awesome.ai.strategy.NotRecommendingAI;
-import ru.mipt.bit.platformer.actors.AIAwesome;
-import ru.mipt.bit.platformer.actors.Actor;
+//import org.awesome.ai.strategy.NotRecommendingAI;
+//import ru.mipt.bit.platformer.actors.AIAwesome;
+import ru.mipt.bit.platformer.actors.AIRandom;
+import ru.mipt.bit.platformer.actors.CommandsCenter;
 import ru.mipt.bit.platformer.actors.Player;
 import ru.mipt.bit.platformer.input.directions.libgdx.LibGdxDirectionsListener;
 import ru.mipt.bit.platformer.input.shootlistener.libgdx.LibGdxShootListener;
 import ru.mipt.bit.platformer.input.togglelistener.ToggleListener;
 import ru.mipt.bit.platformer.input.togglelistener.libgdx.LibGdxToggleListener;
 import ru.mipt.bit.platformer.level.Level;
-import ru.mipt.bit.platformer.level.LevelRandomGenerator;
+import ru.mipt.bit.platformer.level.generator.LevelRandomGenerator;
+import ru.mipt.bit.platformer.objects.tank.Tank;
 import ru.mipt.bit.platformer.renderer.LevelRenderer;
 import ru.mipt.bit.platformer.renderer.libgdx.LibGdxMapGraphics;
 import ru.mipt.bit.platformer.util.TileUtils;
 import ru.mipt.bit.platformer.util.GdxUtils;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.badlogic.gdx.graphics.GL20.GL_COLOR_BUFFER_BIT;
 
@@ -36,8 +38,8 @@ public class GameDesktopLauncher implements ApplicationListener {
     private TiledMap levelBackground;
     private Level level;
     private LevelRenderer levelRenderer;
+    private CommandsCenter commandsCenter;
     private TileUtils tileUtils;
-    private final List<Actor> actors = new ArrayList<>();
 
     private void setupLevelRenderer() {
         batch = new SpriteBatch();
@@ -46,38 +48,29 @@ public class GameDesktopLauncher implements ApplicationListener {
         level.subscribe(levelRenderer);
     }
 
-    private void setupLevel() {
-        level = new Level(new LevelRandomGenerator(10, 8));
-    }
-
-    private void initLevelObjects() {
-        level.initObjects(tileUtils);
-    }
-
     private void initMap() {
         levelBackground = new TmxMapLoader().load("levelBackground.tmx");
         TiledMapTileLayer groundLayer = GdxUtils.getSingleLayer(levelBackground);
         tileUtils = new TileUtils(new GridPoint2(groundLayer.getTileWidth(), groundLayer.getTileHeight()));
     }
 
-    private void initColliders() {
-        level.initColliders();
+    private void initLevel() {
+        level = new LevelRandomGenerator(8, 10, tileUtils).generate();
     }
 
     private void initActors() {
-        if (level.getPlayerTank() != null) {
-            actors.add(new Player(level.getPlayerTank(), new LibGdxDirectionsListener(), new LibGdxShootListener()));
-        }
-        actors.add(new AIAwesome(new NotRecommendingAI(), level));
+        commandsCenter = new CommandsCenter();
+        Tank playerTank = level.getPlayerTank();
+        List<Tank> enemyTanks = level.getTanks().stream().filter(tank -> tank != playerTank).collect(Collectors.toList());
+        commandsCenter.addActor(new AIRandom(enemyTanks));
+        commandsCenter.addActor(new Player(playerTank, new LibGdxDirectionsListener(), new LibGdxShootListener()));
     }
 
     @Override
     public void create() {
         initMap();
-        setupLevel();
+        initLevel();
         setupLevelRenderer();
-        initLevelObjects();
-        initColliders();
         initActors();
     }
 
@@ -88,18 +81,12 @@ public class GameDesktopLauncher implements ApplicationListener {
 
     private void update() {
         float deltaTime = Gdx.graphics.getDeltaTime();
+        commandsCenter.update(deltaTime);
         level.update(deltaTime);
-    }
-
-    private void act() {
-        for (var actor : actors) {
-            actor.act();
-        }
     }
 
     @Override
     public void render() {
-        act();
         update();
         cleanScreen();
         levelRenderer.levelRender();

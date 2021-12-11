@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import org.junit.jupiter.api.Test;
 import ru.mipt.bit.platformer.input.directions.Directions;
 import ru.mipt.bit.platformer.objects.Obstacle;
-import ru.mipt.bit.platformer.objects.tank.Light;
+import ru.mipt.bit.platformer.objects.tank.LightDamagedTank;
 import ru.mipt.bit.platformer.objects.tank.Tank;
 import ru.mipt.bit.platformer.util.TileUtils;
 
@@ -20,7 +20,7 @@ class ColliderManagerTest {
         ColliderManager colliderManager = new ColliderManager();
         colliderManager.addCollider(new Obstacle(new GridPoint2(2, 3), tileUtils));
         colliderManager.addCollider(new Obstacle(new GridPoint2(3, 2), tileUtils));
-        Tank tank = new Tank(new GridPoint2(3, 3), 0.2f, colliderManager, tileUtils, new Light());
+        Tank tank = new Tank(new GridPoint2(3, 3), 0.2f, colliderManager, tileUtils, new LightDamagedTank());
         Field gridPosition = tank.getClass().getDeclaredField("gridPosition");
         gridPosition.setAccessible(true);
         assertAll(

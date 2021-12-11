@@ -4,14 +4,14 @@ import ru.mipt.bit.platformer.level.Level;
 import ru.mipt.bit.platformer.objects.Bullet;
 import ru.mipt.bit.platformer.util.Direction;
 
-public class Heavy implements TankState {
+public class HeavyDamagedTank implements TankState {
     private Tank tank;
 
-    public Heavy(Tank tank) {
+    public HeavyDamagedTank(Tank tank) {
         this.tank = tank;
     }
 
-    public Heavy() {}
+    public HeavyDamagedTank() {}
 
     @Override
     public void tryMove(Direction move) {

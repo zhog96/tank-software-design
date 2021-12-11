@@ -5,7 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import ru.mipt.bit.platformer.ColliderManager;
 import ru.mipt.bit.platformer.input.directions.Directions;
-import ru.mipt.bit.platformer.objects.tank.Light;
+import ru.mipt.bit.platformer.objects.tank.LightDamagedTank;
 import ru.mipt.bit.platformer.objects.tank.Tank;
 import ru.mipt.bit.platformer.util.TileUtils;
 
@@ -20,7 +20,7 @@ class PlayerTest {
     void act(int x0, int y0, String directionCode, int x1, int y1) throws NoSuchFieldException, IllegalAccessException {
         TileUtils tileUtils = new TileUtils(new GridPoint2(10, 10));
         ColliderManager colliderManager = new ColliderManager();
-        Tank tank = new Tank(new GridPoint2(x0, y0), 0.1f, colliderManager, tileUtils, new Light());
+        Tank tank = new Tank(new GridPoint2(x0, y0), 0.1f, colliderManager, tileUtils, new LightDamagedTank());
         Directions[] currDirection = {Directions.valueOf(directionCode)};
         Player actor = new Player(tank, () -> currDirection[0], () -> false);
         actor.act();

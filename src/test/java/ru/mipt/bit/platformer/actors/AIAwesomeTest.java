@@ -6,14 +6,12 @@ import org.awesome.ai.Recommendation;
 import org.junit.jupiter.api.Test;
 import ru.mipt.bit.platformer.ColliderManager;
 import ru.mipt.bit.platformer.level.Level;
-import ru.mipt.bit.platformer.level.LevelFromFileGenerator;
+import ru.mipt.bit.platformer.level.generator.LevelFromFileGenerator;
 import ru.mipt.bit.platformer.util.TileUtils;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.stream.Collectors;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class AIAwesomeTest {
 

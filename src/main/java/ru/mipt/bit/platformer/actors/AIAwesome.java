@@ -9,6 +9,8 @@ import org.awesome.ai.state.immovable.Obstacle;
 import org.awesome.ai.state.movable.Bot;
 import org.awesome.ai.state.movable.Orientation;
 import org.awesome.ai.state.movable.Player;
+import ru.mipt.bit.platformer.actors.commands.ActionCommand;
+import ru.mipt.bit.platformer.actors.commands.MoveCommand;
 import ru.mipt.bit.platformer.input.directions.Directions;
 import ru.mipt.bit.platformer.level.Level;
 import ru.mipt.bit.platformer.objects.tank.Tank;
@@ -18,6 +20,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * По задумке тут должен быть и чуть позже появиться Адаптер
@@ -49,19 +52,22 @@ public class AIAwesome implements Actor {
     }
 
     @Override
-    public void act() {
+    public List<ActionCommand> getCommands(float deltaTime) {
         List<Obstacle> obstacles = new ArrayList<>();
         for (var obstacle : level.getObstacles()) {
             GridPoint2 pos = obstacle.getGridPosition();
             obstacles.add(new Obstacle(pos.x, pos.y));
         }
         List<Bot> bots = new ArrayList<>();
-        for (var tank : level.getEnemyTanks()) {
+        Tank playerTank = level.getPlayerTank();
+        List<Tank> enemyTanks = level.getTanks().stream().filter(tank -> tank != playerTank).collect(Collectors.toList());
+        for (var tank : enemyTanks) {
             bots.add(botFromTank(tank));
         }
         Player player = playerFromTank(level.getPlayerTank());
         GameState.GameStateBuilder gameStateBuilder = getGameStateBuilder(obstacles, bots, player);
         List<Recommendation> recommendations = ai.recommend(gameStateBuilder.build());
+        List<ActionCommand> commands = new ArrayList<>();
         for (var recommendation : recommendations) {
             Tank tank = (Tank) recommendation.getActor().getSource();
             Action action = recommendation.getAction();
@@ -70,8 +76,14 @@ public class AIAwesome implements Actor {
             if (action.equals(Action.MoveEast)) direction = Directions.LEFT;
             if (action.equals(Action.MoveNorth)) direction = Directions.UP;
             if (action.equals(Action.MoveSouth)) direction = Directions.DOWN;
-            if (direction != null) tank.tryMove(direction.getDirection());
+            if (direction != null) commands.add(new MoveCommand(tank, direction.getDirection()));
         }
+        return commands;
+    }
+
+    private Obstacle getObstacleFromObstacle(ru.mipt.bit.platformer.objects.Obstacle obstacle) {
+        GridPoint2 pos = obstacle.getGridPosition();
+        return new Obstacle(pos.x, pos.y);
     }
 
     private tankBuildData getDataFromTank(Tank tank) {
@@ -98,36 +110,36 @@ public class AIAwesome implements Actor {
     private Bot botFromTank(Tank tank) {
         tankBuildData tankBuildData = getDataFromTank(tank);
         if (tankBuildData == null) return null;
-        Bot.BotBuilder botBuilder = new Bot.BotBuilder();
-        botBuilder.source(tankBuildData.source);
-        botBuilder.x(tankBuildData.x);
-        botBuilder.y(tankBuildData.y);
-        botBuilder.destX(tankBuildData.destX);
-        botBuilder.destY(tankBuildData.destY);
-        botBuilder.orientation(tankBuildData.orientation);
-        return botBuilder.build();
+        return Bot.builder()
+                .source(tankBuildData.source)
+                .x(tankBuildData.x)
+                .y(tankBuildData.y)
+                .destX(tankBuildData.destX)
+                .destY(tankBuildData.destY)
+                .orientation(tankBuildData.orientation)
+                .build();
     }
 
     private Player playerFromTank(Tank tank) {
         tankBuildData tankBuildData = getDataFromTank(tank);
         if (tankBuildData == null) return null;
-        Player.PlayerBuilder playerBuilder = new Player.PlayerBuilder();
-        playerBuilder.source(tankBuildData.source);
-        playerBuilder.x(tankBuildData.x);
-        playerBuilder.y(tankBuildData.y);
-        playerBuilder.destX(tankBuildData.destX);
-        playerBuilder.destY(tankBuildData.destY);
-        playerBuilder.orientation(tankBuildData.orientation);
-        return playerBuilder.build();
+        return Player.builder()
+                .source(tankBuildData.source)
+                .x(tankBuildData.x)
+                .y(tankBuildData.y)
+                .destX(tankBuildData.destX)
+                .destY(tankBuildData.destY)
+                .orientation(tankBuildData.orientation)
+                .build();
     }
 
     private GameState.GameStateBuilder getGameStateBuilder(List<Obstacle> obstacles, List<Bot> bots, Player player) {
-        GameState.GameStateBuilder gameStateBuilder = new GameState.GameStateBuilder();
-        gameStateBuilder.obstacles(obstacles);
-        gameStateBuilder.bots(bots);
-        gameStateBuilder.player(player);
-        gameStateBuilder.levelWidth(Integer.MAX_VALUE);
-        gameStateBuilder.levelHeight(Integer.MAX_VALUE);
-        return gameStateBuilder;
+        return GameState.builder()
+                .obstacles(obstacles)
+                .bots(bots)
+                .player(player)
+                .levelWidth(Integer.MAX_VALUE)
+                .levelHeight(Integer.MAX_VALUE);
+                // Мир может быть разной формы, это же просто объекты в сетке, поэтому размеры мира не определены
     }
 }

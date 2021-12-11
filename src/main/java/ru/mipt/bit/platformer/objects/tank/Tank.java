@@ -17,21 +17,24 @@ public class Tank implements Collider {
     private float rotation;
     private Movement movement;
     private final float speed;
-    private final ColliderManager colliderManager;
+    private ColliderManager colliderManager;
     private final TileUtils tileUtils;
     private TankState tankState;
     private Gun gun;
 
-    public Tank(GridPoint2 gridPosition, float speed, ColliderManager colliderManager, TileUtils tileUtils, TankState initialTankState) {
+    public Tank(GridPoint2 gridPosition, float speed, TileUtils tileUtils, TankState initialTankState) {
         this.gridPosition = gridPosition;
         this.position = tileUtils.calculateTileCenter(gridPosition);
         this.rotation = 0.0f;
         this.movement = new Movement(gridPosition, gridPosition, speed, tileUtils);
         this.speed = speed;
-        this.colliderManager = colliderManager;
         this.tileUtils = tileUtils;
         tankState = initialTankState;
         tankState.setTank(this);
+    }
+
+    public void setColliderManager(ColliderManager colliderManager) {
+        this.colliderManager = colliderManager;
     }
 
     public void addGun(Gun gun) {
@@ -64,7 +67,7 @@ public class Tank implements Collider {
 
     protected void tryMoveWithSpeedScale(Direction move, float speedScale) {
         if (movement.finishedMoving()) {
-            if (colliderManager.isTakenBy(gridPosition.cpy().add(move.getDeltaCoordinate())) == null) {
+            if (colliderManager != null && colliderManager.isTakenBy(gridPosition.cpy().add(move.getDeltaCoordinate())) == null) {
                 GridPoint2 prevGridPosition = gridPosition.cpy();
                 gridPosition.add(move.getDeltaCoordinate());
                 movement = new Movement(prevGridPosition, gridPosition, speedScale * speed, tileUtils);

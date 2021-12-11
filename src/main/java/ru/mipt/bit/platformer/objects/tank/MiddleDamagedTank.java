@@ -4,18 +4,18 @@ import ru.mipt.bit.platformer.level.Level;
 import ru.mipt.bit.platformer.objects.Bullet;
 import ru.mipt.bit.platformer.util.Direction;
 
-public class Light implements TankState {
+public class MiddleDamagedTank implements TankState {
     private Tank tank;
 
-    public Light(Tank tank) {
+    public MiddleDamagedTank(Tank tank) {
         this.tank = tank;
     }
 
-    public Light() {}
+    public MiddleDamagedTank() {}
 
     @Override
     public void tryMove(Direction move) {
-        tank.tryMoveWithSpeedScale(move, 1.0f);
+        tank.tryMoveWithSpeedScale(move, 2.0f);
     }
 
     @Override
@@ -25,18 +25,16 @@ public class Light implements TankState {
 
     @Override
     public void takeDamage(Bullet bullet, Level level) {
-        if (bullet.getDamage() > 2) {
+        if (bullet.getDamage() > 1) {
             level.removeTank(tank);
-        } else if (bullet.getDamage() == 2) {
-            tank.changeState(new Heavy(tank));
         } else if (bullet.getDamage() == 1) {
-            tank.changeState(new Middle(tank));
+            tank.changeState(new HeavyDamagedTank(tank));
         }
     }
 
     @Override
     public float getHealthNormalized() {
-        return 1.0f;
+        return 2.0f / 3;
     }
 
     @Override
