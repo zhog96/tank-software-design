@@ -17,7 +17,8 @@ class LightDamagedTankTest {
     void tryMove() {
         TileUtils tileUtils = new TileUtils(new GridPoint2(1, 1));
         ColliderManager colliderManager = new ColliderManager();
-        Tank tank = new Tank(new GridPoint2(1, 0), 1.0f, colliderManager, tileUtils, new LightDamagedTank());
+        Tank tank = new Tank(new GridPoint2(1, 0), 1.0f, tileUtils, new LightDamagedTank());
+        tank.setColliderManager(colliderManager);
         colliderManager.addCollider(tank);
         tank.tryMove(Directions.UP.getDirection());
         assertAll(
@@ -44,21 +45,24 @@ class LightDamagedTankTest {
         ColliderManager colliderManager = new ColliderManager();
         assertAll(
                 () -> {
-                    Tank tank = new Tank(new GridPoint2(1, 0), 1.0f, colliderManager, tileUtils, new LightDamagedTank());
+                    Tank tank = new Tank(new GridPoint2(1, 0), 1.0f, tileUtils, new LightDamagedTank());
+                    tank.setColliderManager(colliderManager);
                     tank.takeDamage(new Bullet(new GridPoint2(0, 0), Directions.UP.getDirection(), 0, 1.0f, colliderManager, tileUtils, null), null);
                     Field state = tank.getClass().getDeclaredField("tankState");
                     state.setAccessible(true);
                     assertTrue(state.get(tank) instanceof LightDamagedTank);
                 },
                 () -> {
-                    Tank tank = new Tank(new GridPoint2(1, 0), 1.0f, colliderManager, tileUtils, new LightDamagedTank());
+                    Tank tank = new Tank(new GridPoint2(1, 0), 1.0f, tileUtils, new LightDamagedTank());
+                    tank.setColliderManager(colliderManager);
                     tank.takeDamage(new Bullet(new GridPoint2(0, 0), Directions.UP.getDirection(), 1, 1.0f, colliderManager, tileUtils, null), null);
                     Field state = tank.getClass().getDeclaredField("tankState");
                     state.setAccessible(true);
                     assertTrue(state.get(tank) instanceof MiddleDamagedTank);
                 },
                 () -> {
-                    Tank tank = new Tank(new GridPoint2(1, 0), 1.0f, colliderManager, tileUtils, new LightDamagedTank());
+                    Tank tank = new Tank(new GridPoint2(1, 0), 1.0f, tileUtils, new LightDamagedTank());
+                    tank.setColliderManager(colliderManager);
                     tank.takeDamage(new Bullet(new GridPoint2(0, 0), Directions.UP.getDirection(), 2, 1.0f, colliderManager, tileUtils, null), null);
                     Field state = tank.getClass().getDeclaredField("tankState");
                     state.setAccessible(true);
@@ -71,7 +75,8 @@ class LightDamagedTankTest {
     void getHealthNormalized() {
         TileUtils tileUtils = new TileUtils(new GridPoint2(1, 1));
         ColliderManager colliderManager = new ColliderManager();
-        Tank tank = new Tank(new GridPoint2(1, 0), 1.0f, colliderManager, tileUtils, new LightDamagedTank());
+        Tank tank = new Tank(new GridPoint2(1, 0), 1.0f, tileUtils, new LightDamagedTank());
+        tank.setColliderManager(colliderManager);
         assertEquals(1.0f, tank.getHealthNormalized(), 0.01f);
     }
 }

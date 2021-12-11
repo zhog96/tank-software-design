@@ -57,7 +57,9 @@ public class LevelRandomGenerator implements LevelGenerator {
                         ));
 
                         level.add(tank);
-                        level.setPlayerTank(tank);
+                        if (rawContent[i][j] == 'P') {
+                            level.setPlayerTank(tank);
+                        }
                         break;
                     default:
                         break;

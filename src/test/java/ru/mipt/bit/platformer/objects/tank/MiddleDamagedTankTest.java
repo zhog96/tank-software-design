@@ -17,7 +17,8 @@ class MiddleDamagedTankTest {
     void tryMove() {
         TileUtils tileUtils = new TileUtils(new GridPoint2(1, 1));
         ColliderManager colliderManager = new ColliderManager();
-        Tank tank = new Tank(new GridPoint2(1, 0), 1.0f, colliderManager, tileUtils, new MiddleDamagedTank());
+        Tank tank = new Tank(new GridPoint2(1, 0), 1.0f, tileUtils, new MiddleDamagedTank());
+        tank.setColliderManager(colliderManager);
         colliderManager.addCollider(tank);
         tank.tryMove(Directions.UP.getDirection());
         assertAll(
@@ -44,14 +45,16 @@ class MiddleDamagedTankTest {
         ColliderManager colliderManager = new ColliderManager();
         assertAll(
                 () -> {
-                    Tank tank = new Tank(new GridPoint2(1, 0), 1.0f, colliderManager, tileUtils, new MiddleDamagedTank());
+                    Tank tank = new Tank(new GridPoint2(1, 0), 1.0f, tileUtils, new MiddleDamagedTank());
+                    tank.setColliderManager(colliderManager);
                     tank.takeDamage(new Bullet(new GridPoint2(0, 0), Directions.UP.getDirection(), 0, 1.0f, colliderManager, tileUtils, null), null);
                     Field state = tank.getClass().getDeclaredField("tankState");
                     state.setAccessible(true);
                     assertTrue(state.get(tank) instanceof MiddleDamagedTank);
                 },
                 () -> {
-                    Tank tank = new Tank(new GridPoint2(1, 0), 1.0f, colliderManager, tileUtils, new MiddleDamagedTank());
+                    Tank tank = new Tank(new GridPoint2(1, 0), 1.0f, tileUtils, new MiddleDamagedTank());
+                    tank.setColliderManager(colliderManager);
                     tank.takeDamage(new Bullet(new GridPoint2(0, 0), Directions.UP.getDirection(), 1, 1.0f, colliderManager, tileUtils, null), null);
                     Field state = tank.getClass().getDeclaredField("tankState");
                     state.setAccessible(true);
@@ -64,7 +67,8 @@ class MiddleDamagedTankTest {
     void getHealthNormalized() {
         TileUtils tileUtils = new TileUtils(new GridPoint2(1, 1));
         ColliderManager colliderManager = new ColliderManager();
-        Tank tank = new Tank(new GridPoint2(1, 0), 1.0f, colliderManager, tileUtils, new MiddleDamagedTank());
+        Tank tank = new Tank(new GridPoint2(1, 0), 1.0f, tileUtils, new MiddleDamagedTank());
+        tank.setColliderManager(colliderManager);
         assertEquals(2.0f / 3, tank.getHealthNormalized(), 0.01f);
     }
 }

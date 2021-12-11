@@ -20,7 +20,8 @@ class ColliderManagerTest {
         ColliderManager colliderManager = new ColliderManager();
         colliderManager.addCollider(new Obstacle(new GridPoint2(2, 3), tileUtils));
         colliderManager.addCollider(new Obstacle(new GridPoint2(3, 2), tileUtils));
-        Tank tank = new Tank(new GridPoint2(3, 3), 0.2f, colliderManager, tileUtils, new LightDamagedTank());
+        Tank tank = new Tank(new GridPoint2(3, 3), 0.2f, tileUtils, new LightDamagedTank());
+        tank.setColliderManager(colliderManager);
         Field gridPosition = tank.getClass().getDeclaredField("gridPosition");
         gridPosition.setAccessible(true);
         assertAll(

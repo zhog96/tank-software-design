@@ -54,12 +54,12 @@ public class LevelFromFileGenerator implements LevelGenerator {
             for (int j = 0; j < content.get(i).length(); j++) {
                 switch (content.get(i).charAt(j)) {
                     case 'T':
-                        level.add(new Obstacle(new GridPoint2(i, j), tileUtils));
+                        level.add(new Obstacle(new GridPoint2(j, i), tileUtils));
                         break;
                     case 'X':
                     case 'P':
                         Tank tank = new Tank(
-                                new GridPoint2(i, j),
+                                new GridPoint2(j, i),
                                 tankSpeed,
                                 tileUtils,
                                 new LightDamagedTank()
@@ -72,7 +72,9 @@ public class LevelFromFileGenerator implements LevelGenerator {
                                 tank
                         ));
                         level.add(tank);
-                        level.setPlayerTank(tank);
+                        if (content.get(i).charAt(j) == 'P') {
+                            level.setPlayerTank(tank);
+                        }
                         break;
                     default:
                         break;

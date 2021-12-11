@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import ru.mipt.bit.platformer.ColliderManager;
+import ru.mipt.bit.platformer.actors.commands.ActionCommand;
 import ru.mipt.bit.platformer.input.directions.Directions;
 import ru.mipt.bit.platformer.objects.tank.LightDamagedTank;
 import ru.mipt.bit.platformer.objects.tank.Tank;
@@ -20,10 +21,11 @@ class PlayerTest {
     void act(int x0, int y0, String directionCode, int x1, int y1) throws NoSuchFieldException, IllegalAccessException {
         TileUtils tileUtils = new TileUtils(new GridPoint2(10, 10));
         ColliderManager colliderManager = new ColliderManager();
-        Tank tank = new Tank(new GridPoint2(x0, y0), 0.1f, colliderManager, tileUtils, new LightDamagedTank());
+        Tank tank = new Tank(new GridPoint2(x0, y0), 0.1f, tileUtils, new LightDamagedTank());
+        tank.setColliderManager(colliderManager);
         Directions[] currDirection = {Directions.valueOf(directionCode)};
         Player actor = new Player(tank, () -> currDirection[0], () -> false);
-        actor.act();
+        actor.getCommands(1.0f).forEach(ActionCommand::act);
         Field gridPosition = tank.getClass().getDeclaredField("gridPosition");
         gridPosition.setAccessible(true);
         assertEquals(gridPosition.get(tank), new GridPoint2(x1, y1));

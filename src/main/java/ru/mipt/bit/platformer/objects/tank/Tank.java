@@ -67,7 +67,7 @@ public class Tank implements Collider {
 
     protected void tryMoveWithSpeedScale(Direction move, float speedScale) {
         if (movement.finishedMoving()) {
-            if (colliderManager != null && colliderManager.isTakenBy(gridPosition.cpy().add(move.getDeltaCoordinate())) == null) {
+            if (colliderManager == null || colliderManager.isTakenBy(gridPosition.cpy().add(move.getDeltaCoordinate())) == null) {
                 GridPoint2 prevGridPosition = gridPosition.cpy();
                 gridPosition.add(move.getDeltaCoordinate());
                 movement = new Movement(prevGridPosition, gridPosition, speedScale * speed, tileUtils);
