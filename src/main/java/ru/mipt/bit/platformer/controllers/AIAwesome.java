@@ -1,4 +1,4 @@
-package ru.mipt.bit.platformer.actors;
+package ru.mipt.bit.platformer.controllers;
 
 import com.badlogic.gdx.math.GridPoint2;
 import org.awesome.ai.AI;
@@ -9,8 +9,8 @@ import org.awesome.ai.state.immovable.Obstacle;
 import org.awesome.ai.state.movable.Bot;
 import org.awesome.ai.state.movable.Orientation;
 import org.awesome.ai.state.movable.Player;
-import ru.mipt.bit.platformer.actors.commands.ActionCommand;
-import ru.mipt.bit.platformer.actors.commands.MoveCommand;
+import ru.mipt.bit.platformer.controllers.commands.ActionCommand;
+import ru.mipt.bit.platformer.controllers.commands.MoveCommand;
 import ru.mipt.bit.platformer.input.directions.Directions;
 import ru.mipt.bit.platformer.level.Level;
 import ru.mipt.bit.platformer.objects.tank.Tank;
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  * По задумке тут должен быть и чуть позже появиться Адаптер
  */
 
-public class AIAwesome implements Actor {
+public class AIAwesome implements Controller {
     private final AI ai;
     private final Level level;
     private final List<Orientation> orientations = Arrays.asList(Orientation.W, Orientation.N, Orientation.E, Orientation.S);

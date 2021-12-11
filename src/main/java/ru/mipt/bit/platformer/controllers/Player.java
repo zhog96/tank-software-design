@@ -1,8 +1,8 @@
-package ru.mipt.bit.platformer.actors;
+package ru.mipt.bit.platformer.controllers;
 
-import ru.mipt.bit.platformer.actors.commands.ActionCommand;
-import ru.mipt.bit.platformer.actors.commands.MoveCommand;
-import ru.mipt.bit.platformer.actors.commands.ShootCommand;
+import ru.mipt.bit.platformer.controllers.commands.ActionCommand;
+import ru.mipt.bit.platformer.controllers.commands.MoveCommand;
+import ru.mipt.bit.platformer.controllers.commands.ShootCommand;
 import ru.mipt.bit.platformer.input.directions.Directions;
 import ru.mipt.bit.platformer.input.directions.DirectionsListener;
 import ru.mipt.bit.platformer.input.shootlistener.ShootListener;
@@ -11,7 +11,7 @@ import ru.mipt.bit.platformer.objects.tank.Tank;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player implements Actor {
+public class Player implements Controller {
     private final Tank targetTank;
     private final DirectionsListener directionsListener;
     private final ShootListener shootListener;

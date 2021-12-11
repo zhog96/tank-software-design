@@ -1,4 +1,4 @@
-package ru.mipt.bit.platformer.actors.commands;
+package ru.mipt.bit.platformer.controllers.commands;
 
 import ru.mipt.bit.platformer.objects.tank.Tank;
 import ru.mipt.bit.platformer.util.Direction;

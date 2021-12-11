@@ -1,9 +1,9 @@
-package ru.mipt.bit.platformer.actors;
+package ru.mipt.bit.platformer.controllers;
 
 import com.badlogic.gdx.math.GridPoint2;
 import org.junit.jupiter.api.Test;
 import ru.mipt.bit.platformer.ColliderManager;
-import ru.mipt.bit.platformer.actors.commands.ActionCommand;
+import ru.mipt.bit.platformer.controllers.commands.ActionCommand;
 import ru.mipt.bit.platformer.input.directions.Directions;
 import ru.mipt.bit.platformer.objects.tank.LightDamagedTank;
 import ru.mipt.bit.platformer.objects.tank.Tank;

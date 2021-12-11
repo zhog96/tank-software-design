@@ -1,8 +1,8 @@
-package ru.mipt.bit.platformer.actors;
+package ru.mipt.bit.platformer.controllers;
 
-import ru.mipt.bit.platformer.actors.commands.ActionCommand;
-import ru.mipt.bit.platformer.actors.commands.MoveCommand;
-import ru.mipt.bit.platformer.actors.commands.ShootCommand;
+import ru.mipt.bit.platformer.controllers.commands.ActionCommand;
+import ru.mipt.bit.platformer.controllers.commands.MoveCommand;
+import ru.mipt.bit.platformer.controllers.commands.ShootCommand;
 import ru.mipt.bit.platformer.input.directions.Directions;
 import ru.mipt.bit.platformer.objects.tank.Tank;
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class AIRandom implements Actor {
+public class AIRandom implements Controller {
     private final List<Tank> targetTanks;
 
     public AIRandom(List<Tank> targetTanks) {

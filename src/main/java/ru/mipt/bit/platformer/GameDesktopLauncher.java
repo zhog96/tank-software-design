@@ -13,9 +13,9 @@ import com.badlogic.gdx.math.GridPoint2;
 
 //import org.awesome.ai.strategy.NotRecommendingAI;
 //import ru.mipt.bit.platformer.actors.AIAwesome;
-import ru.mipt.bit.platformer.actors.AIRandom;
-import ru.mipt.bit.platformer.actors.CommandsCenter;
-import ru.mipt.bit.platformer.actors.Player;
+import ru.mipt.bit.platformer.controllers.AIRandom;
+import ru.mipt.bit.platformer.controllers.CommandsCenter;
+import ru.mipt.bit.platformer.controllers.Player;
 import ru.mipt.bit.platformer.input.directions.libgdx.LibGdxDirectionsListener;
 import ru.mipt.bit.platformer.input.shootlistener.libgdx.LibGdxShootListener;
 import ru.mipt.bit.platformer.input.togglelistener.ToggleListener;
@@ -58,12 +58,12 @@ public class GameDesktopLauncher implements ApplicationListener {
         level = new LevelRandomGenerator(8, 10, tileUtils).generate();
     }
 
-    private void initActors() {
+    private void initControllers() {
         commandsCenter = new CommandsCenter();
         Tank playerTank = level.getPlayerTank();
         List<Tank> enemyTanks = level.getTanks().stream().filter(tank -> tank != playerTank).collect(Collectors.toList());
-        commandsCenter.addActor(new AIRandom(enemyTanks));
-        commandsCenter.addActor(new Player(playerTank, new LibGdxDirectionsListener(), new LibGdxShootListener()));
+        commandsCenter.addController(new AIRandom(enemyTanks));
+        commandsCenter.addController(new Player(playerTank, new LibGdxDirectionsListener(), new LibGdxShootListener()));
     }
 
     @Override
@@ -71,7 +71,7 @@ public class GameDesktopLauncher implements ApplicationListener {
         initMap();
         initLevel();
         setupLevelRenderer();
-        initActors();
+        initControllers();
     }
 
     private void cleanScreen() {

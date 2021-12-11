@@ -1,10 +1,10 @@
-package ru.mipt.bit.platformer.actors;
+package ru.mipt.bit.platformer.controllers;
 
 import com.badlogic.gdx.math.GridPoint2;
 import org.awesome.ai.Action;
 import org.awesome.ai.Recommendation;
 import org.junit.jupiter.api.Test;
-import ru.mipt.bit.platformer.actors.commands.ActionCommand;
+import ru.mipt.bit.platformer.controllers.commands.ActionCommand;
 import ru.mipt.bit.platformer.level.Level;
 import ru.mipt.bit.platformer.level.generator.LevelFromFileGenerator;
 import ru.mipt.bit.platformer.objects.tank.Tank;
