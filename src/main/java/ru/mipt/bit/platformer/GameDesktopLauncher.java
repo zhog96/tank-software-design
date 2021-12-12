@@ -11,8 +11,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.GridPoint2;
 
-//import org.awesome.ai.strategy.NotRecommendingAI;
-//import ru.mipt.bit.platformer.actors.AIAwesome;
 import ru.mipt.bit.platformer.controllers.AIRandom;
 import ru.mipt.bit.platformer.controllers.CommandsCenter;
 import ru.mipt.bit.platformer.controllers.Player;
