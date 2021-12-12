@@ -1,0 +1,12 @@
+{
+  "Get posts given current seen post": {
+    "query": {
+      "user_id": "string",
+      "curr_last_post_id": "string",
+      "token": "string"
+    },
+    "response": {
+      "post_ids": "string[]"
+    }
+  }
+}

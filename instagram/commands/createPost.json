@@ -1,0 +1,12 @@
+{
+  "Create Post": {
+    "query": {
+      "user_id": "string",
+      "image": "Image",
+      "token": "string"
+    },
+    "response": {
+      "statusCode": "int"
+    }
+  }
+}

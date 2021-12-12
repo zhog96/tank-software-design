@@ -1,0 +1,9 @@
+{
+  "Comments Table": {
+    "_id": "int",
+    "creator_id": "string",
+    "post_id": "string",
+    "content": "string",
+    "creation_datetime": "string"
+  }
+}

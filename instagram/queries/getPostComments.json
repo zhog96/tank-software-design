@@ -1,0 +1,12 @@
+{
+  "Get next comments for post": {
+    "query": {
+      "post_id": "string",
+      "curr_last_comment_id": "string",
+      "token": "string"
+    },
+    "response": {
+      "comment_ids": "string[]"
+    }
+  }
+}

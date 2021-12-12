@@ -1,0 +1,10 @@
+{
+  "Post Table": {
+    "_id": "int",
+    "creator_id": "string",
+    "image": "Image",
+    "like_count": "int",
+    "creation_datetime": "string",
+    "is_liked_by_us": "bool"
+  }
+}
